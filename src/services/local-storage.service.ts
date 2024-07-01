@@ -1,6 +1,6 @@
 import { isValidJSON } from '../utils/json.util';
 
-export default class LocalStorageService {
+export class LocalStorageService {
   static set(key: string, value: string): void {
     if (!localStorage) {
       console.error("don't have localStorage");
@@ -25,11 +25,11 @@ export default class LocalStorageService {
     localStorage.setItem(key, JSON.stringify(data));
   }
 
-  static getObject<T>(key: string): T | Record<string, unknown> {
+  static getObject<T>(key: string): T {
     const jsonString = this.get(key);
     if (isValidJSON(jsonString)) {
       return JSON.parse(jsonString) as T;
     }
-    return {};
+    return {} as T;
   }
 }

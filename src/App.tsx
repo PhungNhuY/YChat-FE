@@ -1,7 +1,12 @@
 import './App.css';
+import { AuthProvider } from './providers';
 
 function App() {
-  return <></>;
+  return (
+    <AuthProvider>
+      <></>
+    </AuthProvider>
+  );
 }
 
 export default App;
