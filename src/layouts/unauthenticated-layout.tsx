@@ -2,7 +2,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../hooks';
 import { IUser } from '../types';
 
-export function AuthenticatedLayout() {
+export function UnauthenticatedLayout() {
   const { user }: { user: IUser } = useAuth();
 
   if (user._id) {
