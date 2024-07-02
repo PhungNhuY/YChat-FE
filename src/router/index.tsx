@@ -4,9 +4,8 @@ import {
   RouterProvider,
 } from 'react-router-dom';
 import { AuthenticatedLayout } from '../layouts/authenticated-layout';
-import ErrorPage from '../pages/error-page';
-import HomePage from '../pages/home-page';
-import NotFoundPage from '../pages/not-found-page';
+import { UnauthenticatedLayout } from '../layouts/unauthenticated-layout';
+import { ErrorPage, HomePage, LoginPage, NotFoundPage } from '../pages';
 
 // Define public routes accessible by all users
 const routesForPublic: Array<RouteObject> = [];
@@ -27,7 +26,19 @@ const routesForAuthenticatedOnly: Array<RouteObject> = [
 ];
 
 // Define routes accessible only by non-authenticated users
-const routesForUnauthenticatedOnly: Array<RouteObject> = [];
+const routesForUnauthenticatedOnly: Array<RouteObject> = [
+  {
+    path: '',
+    element: <UnauthenticatedLayout />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: 'login',
+        element: <LoginPage />,
+      },
+    ],
+  },
+];
 
 const router = createBrowserRouter([
   ...routesForPublic,
