@@ -15,7 +15,7 @@ export default function LoginForm() {
   );
 
   return (
-    <Form name="Login" onFinish={onFinish} autoComplete="off">
+    <Form name="Login" onFinish={onFinish} autoComplete="off" layout="vertical">
       <Form.Item<LoginFormFieldsType>
         label="Email"
         name="email"
@@ -23,7 +23,6 @@ export default function LoginForm() {
       >
         <Input />
       </Form.Item>
-
       <Form.Item<LoginFormFieldsType>
         label="Password"
         name="password"
@@ -31,9 +30,8 @@ export default function LoginForm() {
       >
         <Input.Password />
       </Form.Item>
-
       <Form.Item>
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" className="w-100">
           Login
         </Button>
       </Form.Item>
