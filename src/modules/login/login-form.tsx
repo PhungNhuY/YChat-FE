@@ -1,29 +1,46 @@
 import { Button, Form, FormProps, Input } from 'antd';
 import { useCallback } from 'react';
-
-type LoginFormFieldsType = {
-  email?: string;
-  password?: string;
-};
+import { Ilogin } from '../../types';
+import { AuthStorageService, login } from '../../services';
+import { useAuth } from '../../hooks';
 
 export default function LoginForm() {
-  const onFinish: FormProps<LoginFormFieldsType>['onFinish'] = useCallback(
-    (values: LoginFormFieldsType) => {
-      console.log('Success', values);
+  const { setUser } = useAuth();
+
+  const onFinish: FormProps<Ilogin>['onFinish'] = useCallback(
+    async (values: Ilogin) => {
+      const user = await login(values);
+      if (user) {
+        AuthStorageService.setLoginUser(user);
+        setUser({
+          ...user,
+          access_token: undefined,
+          refresh_token: undefined,
+        });
+      }
     },
     [],
   );
 
   return (
     <Form name="Login" onFinish={onFinish} autoComplete="off" layout="vertical">
-      <Form.Item<LoginFormFieldsType>
+      <Form.Item<Ilogin>
         label="Email"
         name="email"
-        rules={[{ required: true, message: 'Please input your email!' }]}
+        rules={[
+          {
+            type: 'email',
+            message: 'Invalid email address',
+          },
+          {
+            required: true,
+            message: 'Please input your email!',
+          },
+        ]}
       >
         <Input />
       </Form.Item>
-      <Form.Item<LoginFormFieldsType>
+      <Form.Item<Ilogin>
         label="Password"
         name="password"
         rules={[{ required: true, message: 'Please input your password!' }]}

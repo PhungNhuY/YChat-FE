@@ -1,5 +1,7 @@
 import axios, { AxiosError, HttpStatusCode } from 'axios';
-import { debounce } from 'lodash';
+import { throttle } from 'lodash';
+import { globalValues } from '../utils';
+import { AuthStorageService } from './auth-storage.service';
 
 export const axiosService = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -27,8 +29,9 @@ axiosService.interceptors.response.use(
           return axios(originalRequest);
         } catch (error: any) {
           if (error.response.status === 401) {
-            // TODO: logout
-            // window.location.href = '/auth/logout';
+            globalValues.setUser!({});
+            AuthStorageService.resetAll();
+            globalValues.navigate!('/login');
           } else {
             return Promise.reject(error);
           }
@@ -59,21 +62,17 @@ export const axiosErrorHandler = (error: AxiosError) => {
     ) {
       // server problem
       showServiceUnavailableError();
-    }
-    // else if (statusCode === HttpStatusCode.Forbidden) { //403
-    //     window.location.href = '/';
-    // }
-    else {
+    } else if (statusCode === HttpStatusCode.Forbidden /*403*/) {
+      globalValues.navigate!('/');
+    } else {
       const { message } = response.data as { message: string | string[] };
-      let toastMessage = '';
+      let errorMessage = '';
       if (Array.isArray(message)) {
-        toastMessage = message[0];
+        errorMessage = message[0];
       } else {
-        toastMessage = message;
+        errorMessage = message;
       }
-      // toast(toastMessage, {
-      //   type: 'error',
-      // });
+      globalValues.messageApi!.error(errorMessage);
     }
   } else if (request) {
     // The request was made but no response was received
@@ -86,20 +85,14 @@ export const axiosErrorHandler = (error: AxiosError) => {
   }
 };
 
-const DEBOUNCE_TIME = 200;
+const THROTTLE_TIME = 200;
 
-const showServiceUnavailableError = debounce(() => {
-  console.log('service unavailable');
-  // toast('Service unavailable! Please try again later!', {
-  //     type: 'error',
-  //     icon: <img src={serverErrorIcon} alt="" style={{ width: 20, height: 20 }} />
-  // });
-}, DEBOUNCE_TIME);
+const showServiceUnavailableError = throttle(() => {
+  globalValues.messageApi!.error(
+    'Service unavailable! Please try again later!',
+  );
+}, THROTTLE_TIME);
 
-const showConnectionProblemError = debounce(() => {
-  console.log('connection problem');
-  // toast('Connection problem! Please try again later!', {
-  //     type: 'error',
-  //     icon: <img src={disconnectIcon} alt="" style={{ width: 20, height: 20 }} />
-  // });
-}, DEBOUNCE_TIME);
+const showConnectionProblemError = throttle(() => {
+  globalValues.messageApi!.error('Connection problem! Please try again later!');
+}, THROTTLE_TIME);
