@@ -1,9 +1,11 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth, useSetup } from '../hooks';
-import { Layout, Menu, MenuProps, theme } from 'antd';
+import { Avatar, Layout, Menu, MenuProps, theme } from 'antd';
 import { useState } from 'react';
-import { CommentOutlined, TeamOutlined, UserOutlined } from '@ant-design/icons';
+import { CommentOutlined, TeamOutlined } from '@ant-design/icons';
 import { IUser } from '../types';
+import styles from './authenticated-layout.module.css';
+import clsx from 'clsx';
 
 const { Content, Sider } = Layout;
 
@@ -12,12 +14,12 @@ type MenuItem = Required<MenuProps>['items'][number];
 const items: MenuItem[] = [
   {
     label: 'Conversations',
-    key: 'Conversations',
+    key: 'conversations',
     icon: <CommentOutlined />,
   },
   {
     label: 'People',
-    key: 'People',
+    key: 'people',
     icon: <TeamOutlined />,
   },
 ];
@@ -32,6 +34,16 @@ export function AuthenticatedLayout() {
   const [contextHolder] = useSetup();
   const { token } = theme.useToken();
 
+  const onCLickMenu: MenuProps['onClick'] = (e: any) => {
+    switch (e.key) {
+      case 'conversation':
+        break;
+
+      case 'people':
+        break;
+    }
+  };
+
   return (
     <>
       {contextHolder}
@@ -40,22 +52,44 @@ export function AuthenticatedLayout() {
           collapsible
           collapsed={collapsed}
           onCollapse={(value) => setCollapsed(value)}
-          style={{ background: token.colorBgContainer }}
+          style={{
+            background: token.colorBgContainer,
+          }}
           theme="light"
         >
           <div className="d-flex flex-column justify-content-between h-100">
-            <Menu
-              theme="light"
-              items={items}
-              defaultSelectedKeys={['Conversations']}
-            />
-            <Menu
-              theme="light"
-              items={[
-                { label: user.name, key: user.name, icon: <UserOutlined /> },
-              ]}
-              defaultSelectedKeys={['Conversations']}
-            />
+            <div className="">
+              <div
+                className={clsx(
+                  styles.logo,
+                  'd-flex justify-content-center align-items-center',
+                )}
+              >
+                YChat
+              </div>
+              <Menu
+                theme="light"
+                items={items}
+                defaultSelectedKeys={['conversations']}
+                onClick={onCLickMenu}
+                style={{ border: 0 }}
+              />
+            </div>
+            <div
+              className={clsx(
+                'd-flex justify-content-center align-items-center',
+                styles.profile,
+              )}
+            >
+              <Avatar className="me-1">{user.name[0]}</Avatar>
+              <span
+                className={clsx(
+                  collapsed ? styles.name_hide : styles.name_show,
+                )}
+              >
+                {user.name}
+              </span>
+            </div>
           </div>
         </Sider>
         <Layout>

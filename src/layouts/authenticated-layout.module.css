@@ -1,0 +1,27 @@
+.profile {
+  height: 46px;
+  padding: 0px 16px;
+  margin: 4px;
+  border-radius: 8px;
+}
+
+.profile:hover {
+  background-color: #e7e7e7;
+}
+
+.name_show {
+  overflow: hidden;
+  width: 150px;
+  max-width: fit-content;
+  transition-delay: 0.1s;
+  transition-property: width;
+}
+
+.name_hide {
+  overflow: hidden;
+  width: 0;
+}
+
+.logo {
+  height: 50px;
+}

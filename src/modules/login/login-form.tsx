@@ -1,5 +1,4 @@
 import { Button, Form, FormProps, Input } from 'antd';
-import { useCallback } from 'react';
 import { Ilogin } from '../../types';
 import { AuthStorageService, login } from '../../services';
 import { useAuth } from '../../hooks';
@@ -7,20 +6,17 @@ import { useAuth } from '../../hooks';
 export default function LoginForm() {
   const { setUser } = useAuth();
 
-  const onFinish: FormProps<Ilogin>['onFinish'] = useCallback(
-    async (values: Ilogin) => {
-      const user = await login(values);
-      if (user) {
-        AuthStorageService.setLoginUser(user);
-        setUser({
-          ...user,
-          access_token: undefined,
-          refresh_token: undefined,
-        });
-      }
-    },
-    [],
-  );
+  const onFinish: FormProps<Ilogin>['onFinish'] = async (values: Ilogin) => {
+    const user = await login(values);
+    if (user) {
+      AuthStorageService.setLoginUser(user);
+      setUser({
+        ...user,
+        access_token: undefined,
+        refresh_token: undefined,
+      });
+    }
+  };
 
   return (
     <Form name="Login" onFinish={onFinish} autoComplete="off" layout="vertical">
