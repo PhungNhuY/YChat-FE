@@ -47,7 +47,7 @@ export function AuthenticatedLayout() {
   return (
     <>
       {contextHolder}
-      <Layout style={{ height: '100vh' }}>
+      <Layout className="vh-100">
         <Sider
           collapsible
           collapsed={collapsed}
@@ -92,7 +92,7 @@ export function AuthenticatedLayout() {
             </div>
           </div>
         </Sider>
-        <Layout>
+        <Layout className="vh-100">
           <Content>
             <Outlet />
           </Content>
