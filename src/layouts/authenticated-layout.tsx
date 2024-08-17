@@ -6,6 +6,7 @@ import { CommentOutlined, TeamOutlined } from '@ant-design/icons';
 import { IUser } from '../types';
 import styles from './authenticated-layout.module.css';
 import clsx from 'clsx';
+import { LocalStorageService } from '../services';
 
 const { Content, Sider } = Layout;
 
@@ -30,7 +31,9 @@ export function AuthenticatedLayout() {
     return <Navigate to="/login" />;
   }
 
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(
+    LocalStorageService.get('siderState') === 'false' ? false : true,
+  );
   const [contextHolder] = useSetup();
   const { token } = theme.useToken();
 
@@ -51,7 +54,10 @@ export function AuthenticatedLayout() {
         <Sider
           collapsible
           collapsed={collapsed}
-          onCollapse={(value) => setCollapsed(value)}
+          onCollapse={(value) => {
+            setCollapsed(value);
+            LocalStorageService.set('siderState', value ? 'true' : 'false');
+          }}
           style={{
             background: token.colorBgContainer,
           }}
