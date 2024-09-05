@@ -5,7 +5,7 @@
 
 .mainContent {
   display: flex;
-  margin: 16px;
+  margin: 4px;
   margin-left: unset;
   position: absolute;
   top: 0;
@@ -15,7 +15,7 @@
 }
 
 .block {
-  margin-left: 16px;
+  margin: 4px;
   border-radius: 8px;
   padding: 8px;
   background-color: white;

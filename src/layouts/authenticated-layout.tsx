@@ -62,6 +62,7 @@ export function AuthenticatedLayout() {
             background: token.colorBgContainer,
           }}
           theme="light"
+          id="authenticated-layout-sider"
         >
           <div className="d-flex flex-column justify-content-between h-100">
             <div className="">
@@ -99,7 +100,7 @@ export function AuthenticatedLayout() {
           </div>
         </Sider>
         <Layout className="vh-100">
-          <Content>
+          <Content id="authenticated-layout-content">
             <Outlet />
           </Content>
         </Layout>
