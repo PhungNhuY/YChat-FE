@@ -19,3 +19,11 @@ html,
 .vh-100 {
   height: 100vh;
 }
+
+.flex-fixed-size {
+  flex: 0 0 auto;
+}
+
+.flex-expanding-size {
+  flex: 1;
+}

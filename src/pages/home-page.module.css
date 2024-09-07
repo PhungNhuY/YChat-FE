@@ -17,7 +17,6 @@
 .block {
   margin: 4px;
   border-radius: 8px;
-  padding: 8px;
   background-color: white;
   box-shadow: 0px 0px 8px rgba(52, 72, 84, 0.05);
 }
