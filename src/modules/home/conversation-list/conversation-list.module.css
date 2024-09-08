@@ -54,4 +54,5 @@
 .list {
   overflow-y: auto;
   margin-top: 8px;
+  padding: 0px 6px;
 }

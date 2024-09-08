@@ -5,6 +5,7 @@ import { Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { FaArrowLeft } from 'react-icons/fa6';
 import { useState } from 'react';
+import { Conversation } from './conversation';
 
 export function ConversationList() {
   const [isSearching, setIsSearching] = useState(false);
@@ -53,7 +54,11 @@ export function ConversationList() {
           onClick={() => setIsSearching(true)}
         />
       </div>
-      <div className={clsx(styles.list, 'flex-expanding-size')}></div>
+      <div className={clsx(styles.list, 'flex-expanding-size')}>
+        {[...Array(30)].map((_, i) => (
+          <Conversation key={i} />
+        ))}
+      </div>
     </div>
   );
 }
