@@ -1,3 +1,4 @@
+import { IMessage } from './message.type';
 import { IUser } from './user.type';
 
 export enum EMemberRole {
@@ -24,4 +25,5 @@ export interface IConversation {
   members: Array<IMember>;
   color?: string;
   avatar?: string;
+  lastMessage?: IMessage;
 }

@@ -6,9 +6,14 @@ import { SearchOutlined } from '@ant-design/icons';
 import { FaArrowLeft } from 'react-icons/fa6';
 import { useState } from 'react';
 import { Conversation } from './conversation';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
 
 export function ConversationList() {
   const [isSearching, setIsSearching] = useState(false);
+  const conversations = useSelector(
+    (state: RootState) => state.conversation.conversations,
+  );
 
   return (
     <div className={clsx(styles.conversationList, 'd-flex flex-column')}>
@@ -55,8 +60,8 @@ export function ConversationList() {
         />
       </div>
       <div className={clsx(styles.list, 'flex-expanding-size')}>
-        {[...Array(30)].map((_, i) => (
-          <Conversation key={i} />
+        {conversations.map((data, i) => (
+          <Conversation key={i} data={data} />
         ))}
       </div>
     </div>
