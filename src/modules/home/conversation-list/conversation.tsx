@@ -2,6 +2,9 @@ import clsx from 'clsx';
 import styles from './conversation.module.css';
 import { Avatar } from 'antd';
 import { IConversation } from '../../../types';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime);
 
 export function Conversation({ data }: { data: IConversation }) {
   return (
@@ -19,7 +22,7 @@ export function Conversation({ data }: { data: IConversation }) {
             <>
               <span>Hey, how are you doing</span>
               <span> &#8901; </span>
-              <span>1 minute</span>
+              <span>{dayjs(data.lastMessage.createdAt).fromNow(true)}</span>
             </>
           )}
         </div>

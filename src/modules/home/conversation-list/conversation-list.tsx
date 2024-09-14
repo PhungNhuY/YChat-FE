@@ -6,12 +6,12 @@ import { SearchOutlined } from '@ant-design/icons';
 import { FaArrowLeft } from 'react-icons/fa6';
 import { useState } from 'react';
 import { Conversation } from './conversation';
-import { useSelector } from 'react-redux';
 import { RootState } from '../../../store';
+import { useAppSelector } from '../../../hooks';
 
 export function ConversationList() {
   const [isSearching, setIsSearching] = useState(false);
-  const conversations = useSelector(
+  const conversations = useAppSelector(
     (state: RootState) => state.conversation.conversations,
   );
 
