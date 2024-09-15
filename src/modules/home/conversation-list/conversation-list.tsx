@@ -4,16 +4,23 @@ import { IoCreateOutline } from 'react-icons/io5';
 import { Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { FaArrowLeft } from 'react-icons/fa6';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Conversation } from './conversation';
-import { RootState } from '../../../store';
+import { AppDispatch } from '../../../store';
 import { useAppSelector } from '../../../hooks';
+import { getConversationsThunk } from '../../../store/conversation.slice';
+import { useDispatch } from 'react-redux';
 
 export function ConversationList() {
   const [isSearching, setIsSearching] = useState(false);
   const conversations = useAppSelector(
-    (state: RootState) => state.conversation.conversations,
+    (state) => state.conversation.conversations,
   );
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    dispatch(getConversationsThunk());
+  }, []);
 
   return (
     <div className={clsx(styles.conversationList, 'd-flex flex-column')}>

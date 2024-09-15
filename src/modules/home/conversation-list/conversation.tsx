@@ -16,11 +16,11 @@ export function Conversation({ data }: { data: IConversation }) {
     >
       <Avatar size={46} className="flex-fixed-size" />
       <div className="flex-expanding-size">
-        <span>{data.name || 'temp'}</span>
+        <span>{data.name || '_'}</span>
         <div className="">
           {data.lastMessage && (
             <>
-              <span>Hey, how are you doing</span>
+              <span>{data.lastMessage.content}</span>
               <span> &#8901; </span>
               <span>{dayjs(data.lastMessage.createdAt).fromNow(true)}</span>
             </>
