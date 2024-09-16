@@ -10,13 +10,16 @@ import { AppDispatch } from '../../../store';
 import { useAppSelector } from '../../../hooks';
 import { getConversationsThunk } from '../../../store/conversation.slice';
 import { useDispatch } from 'react-redux';
+import { ConversationSkeleton } from './conversation-skeleton';
 
 export function ConversationList() {
-  const [isSearching, setIsSearching] = useState(false);
   const conversations = useAppSelector(
     (state) => state.conversation.conversations,
   );
+  const loading = useAppSelector((state) => state.conversation.loading);
   const dispatch = useDispatch<AppDispatch>();
+
+  const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
     dispatch(getConversationsThunk());
@@ -67,9 +70,15 @@ export function ConversationList() {
         />
       </div>
       <div className={clsx(styles.list, 'flex-expanding-size')}>
-        {conversations.map((data, i) => (
-          <Conversation key={i} data={data} />
-        ))}
+        {loading ? (
+          <>
+            {[...Array(5)].map((_, i) => (
+              <ConversationSkeleton key={i} />
+            ))}
+          </>
+        ) : (
+          conversations.map((data, i) => <Conversation key={i} data={data} />)
+        )}
       </div>
     </div>
   );

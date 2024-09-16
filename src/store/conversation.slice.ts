@@ -1,36 +1,15 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import {
-  EConversationType,
-  EMessageType,
-  EUserStatus,
-  IConversation,
-} from '../types';
+import { IConversation } from '../types';
 import { getConversations } from '../services';
 
 export interface IConversationState {
   conversations: Array<IConversation>;
+  loading: boolean;
 }
 
 const initialState: IConversationState = {
-  conversations: [
-    {
-      _id: '123',
-      type: EConversationType.ONE_TO_ONE,
-      members: [],
-      lastMessage: {
-        user: {
-          name: 'john',
-          email: '',
-          _id: '1',
-          status: EUserStatus.ACTIVATED,
-        },
-        conversation: '1',
-        type: EMessageType.TEXT,
-        content: 'hello',
-        createdAt: new Date(),
-      },
-    },
-  ],
+  conversations: [],
+  loading: false,
 };
 
 export const getConversationsThunk = createAsyncThunk(
@@ -49,9 +28,14 @@ export const conversationSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getConversationsThunk.fulfilled, (state, action) => {
-      state.conversations = action.payload;
-    });
+    builder
+      .addCase(getConversationsThunk.fulfilled, (state, action) => {
+        state.conversations = action.payload;
+        state.loading = false;
+      })
+      .addCase(getConversationsThunk.pending, (state) => {
+        state.loading = true;
+      });
   },
 });
 
