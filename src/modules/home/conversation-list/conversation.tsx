@@ -1,12 +1,27 @@
 import clsx from 'clsx';
 import styles from './conversation.module.css';
 import { Avatar } from 'antd';
-import { IConversation } from '../../../types';
+import { EConversationType, IConversation, IUser } from '../../../types';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { useAuth } from '../../../hooks';
 dayjs.extend(relativeTime);
 
+function genConversationName(conversation: IConversation, user: IUser): string {
+  if (conversation.name) {
+    return conversation.name;
+  }
+  if (conversation.type === EConversationType.ONE_TO_ONE) {
+    return (conversation.members[0].user as IUser)._id === user._id
+      ? (conversation.members[1].user as IUser).name
+      : (conversation.members[0].user as IUser).name;
+  } else {
+    return conversation.members.map((m) => (m.user as IUser).name).join(', ');
+  }
+}
+
 export function Conversation({ data }: { data: IConversation }) {
+  const { user }: { user: IUser } = useAuth();
   return (
     <div
       className={clsx(
@@ -16,7 +31,7 @@ export function Conversation({ data }: { data: IConversation }) {
     >
       <Avatar size={46} className="flex-fixed-size" />
       <div className="flex-expanding-size">
-        <span>{data.name || '_'}</span>
+        <span>{genConversationName(data, user)}</span>
         <div className="">
           {data.lastMessage && (
             <>
