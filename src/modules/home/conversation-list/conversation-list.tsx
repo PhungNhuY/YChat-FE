@@ -22,7 +22,11 @@ export function ConversationList() {
   const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
-    dispatch(getConversationsThunk());
+    dispatch(
+      getConversationsThunk({
+        page: 1,
+      }),
+    );
   }, []);
 
   return (
