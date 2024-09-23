@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import styles from './home-page.module.css';
 import { ConversationList } from '../modules/home/conversation-list/conversation-list';
+import { ChatContainer } from '../modules/home/chat-container/chat-container';
 
 export const HomePage = () => {
   return (
@@ -12,8 +13,11 @@ export const HomePage = () => {
         >
           <ConversationList />
         </div>
-        <div className={clsx(styles.block, styles.block2)} id="home-messages">
-          2
+        <div
+          className={clsx(styles.block, styles.block2)}
+          id="home-chat-container"
+        >
+          <ChatContainer />
         </div>
         <div
           className={clsx(styles.block, styles.block3)}

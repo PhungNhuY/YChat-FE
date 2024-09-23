@@ -31,6 +31,7 @@ export const conversationSlice = createSlice({
     builder
       .addCase(getConversationsThunk.fulfilled, (state, action) => {
         action.payload.forEach((c) => {
+          // add the conversation if it doesn't exist in the list
           if (!state.conversations.some((c2) => c2._id === c._id)) {
             state.conversations.push(c);
           }
