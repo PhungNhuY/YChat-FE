@@ -1,6 +1,33 @@
 .heading {
-  height: 56px;
   box-shadow: 0 0 4px #00000022;
+  padding: 4px 8px;
+}
+
+.thread {
+  border-radius: 8px;
+}
+
+.thread:hover {
+  background-color: #00000010;
+}
+
+.conversationName {
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 18px;
+}
+
+.conversationStatus {
+  font-size: 14px;
+  line-height: 16px;
+}
+
+.functionalButton {
+  border-radius: 50%;
+}
+
+.functionalButton:hover {
+  background-color: #00000010;
 }
 
 .inputContainer {

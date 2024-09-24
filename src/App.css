@@ -46,3 +46,9 @@ html,
 .flex-expanding-size {
   flex: 1;
 }
+
+.empty-button {
+  border: none;
+  background-color: unset;
+  padding: unset;
+}
