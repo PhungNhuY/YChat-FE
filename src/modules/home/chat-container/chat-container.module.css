@@ -23,13 +23,18 @@
 }
 
 .functionalButton {
-  border-radius: 50%;
+  border-radius: 99px;
 }
 
 .functionalButton:hover {
-  background-color: #00000010;
+  background-color: #00000014;
 }
 
 .inputContainer {
-  height: 60px;
+  padding: 14px 8px;
+}
+
+.inputButton {
+  height: 36px;
+  width: 36px;
 }
