@@ -13,13 +13,7 @@ export function ChatContainerHeading() {
   );
 
   return (
-    <div
-      className={clsx(
-        'flex-fixed-size',
-        styles.heading,
-        'd-flex justify-content-between',
-      )}
-    >
+    <div className={clsx(styles.heading, 'd-flex justify-content-between')}>
       <div
         className={clsx('d-flex align-items-center px-2 py-1', styles.thread)}
       >

@@ -7,7 +7,7 @@ import { BiSolidLike } from 'react-icons/bi';
 
 export function InputContainer() {
   return (
-    <div className={clsx('flex-fixed-size', styles.inputContainer, 'd-flex')}>
+    <div className={clsx(styles.inputContainer, 'd-flex')}>
       <div className="flex-fixed-size d-flex align-items-center">
         <button
           className={clsx(

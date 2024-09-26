@@ -1,0 +1,11 @@
+.content {
+  background-color: #00000014;
+  padding: 6px 12px;
+  border-radius: 99px;
+  color: black;
+}
+
+.content_mine {
+  background-color: #007bf5;
+  color: white;
+}
