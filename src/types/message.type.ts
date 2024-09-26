@@ -6,9 +6,15 @@ export enum EMessageType {
 }
 
 export interface IMessage {
+  _id: string;
   user: IUser;
   conversation: string;
   type: EMessageType;
   content: string;
   createdAt: Date;
+}
+
+export interface IGetMessagesParams {
+  projectId: string;
+  page: number;
 }

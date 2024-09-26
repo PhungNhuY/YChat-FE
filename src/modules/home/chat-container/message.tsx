@@ -12,7 +12,7 @@ export function Message({
   currentUser: IUser;
   author: IUser;
 }) {
-  const mine = currentUser._id === author._id;
+  const mine = currentUser._id === author?._id;
   return (
     <div
       className={clsx(
