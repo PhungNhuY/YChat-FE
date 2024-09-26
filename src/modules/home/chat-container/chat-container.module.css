@@ -31,7 +31,8 @@
 }
 
 .inputContainer {
-  padding: 14px 8px;
+  padding: 8px 8px 14px;
+  border-top: 1px solid #00000014;
 }
 
 .inputButton {

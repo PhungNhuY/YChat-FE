@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import conversationReducer from './conversation.slice';
+import conversationReducer from './conversations.slice';
+import currentConversationReducer from './current-conversation.slice';
 
 export const store = configureStore({
   reducer: {
     conversation: conversationReducer,
+    currentConversation: currentConversationReducer,
   },
 });
 

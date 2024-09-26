@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import { Conversation } from './conversation';
 import { AppDispatch } from '../../../store';
 import { useAppSelector } from '../../../hooks';
-import { getConversationsThunk } from '../../../store/conversation.slice';
+import { getConversationsThunk } from '../../../store/conversations.slice';
 import { useDispatch } from 'react-redux';
 import { ConversationSkeleton } from './conversation-skeleton';
 

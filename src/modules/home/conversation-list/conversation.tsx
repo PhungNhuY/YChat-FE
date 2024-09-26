@@ -1,33 +1,31 @@
 import clsx from 'clsx';
 import styles from './conversation.module.css';
 import { Avatar } from 'antd';
-import { EConversationType, IConversation, IUser } from '../../../types';
+import { IConversation, IUser } from '../../../types';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useAuth } from '../../../hooks';
+import { AppDispatch } from '../../../store';
+import { useDispatch } from 'react-redux';
+import { setCurrentConversation } from '../../../store/current-conversation.slice';
+import { genConversationName } from '../../../utils/conversation';
 dayjs.extend(relativeTime);
-
-function genConversationName(conversation: IConversation, user: IUser): string {
-  if (conversation.name) {
-    return conversation.name;
-  }
-  if (conversation.type === EConversationType.ONE_TO_ONE) {
-    return (conversation.members[0].user as IUser)._id === user._id
-      ? (conversation.members[1].user as IUser).name
-      : (conversation.members[0].user as IUser).name;
-  } else {
-    return conversation.members.map((m) => (m.user as IUser).name).join(', ');
-  }
-}
 
 export function Conversation({ data }: { data: IConversation }) {
   const { user }: { user: IUser } = useAuth();
+  const dispatch = useDispatch<AppDispatch>();
+
+  const onCLickConversation = () => {
+    dispatch(setCurrentConversation(data));
+  };
+
   return (
     <div
       className={clsx(
         styles.wrapper,
         'd-flex justify-content-between align-items-center gap-2',
       )}
+      onClick={onCLickConversation}
     >
       <Avatar size={46} className="flex-fixed-size" />
       <div className="flex-expanding-size">
