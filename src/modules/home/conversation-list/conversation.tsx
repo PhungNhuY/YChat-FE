@@ -7,7 +7,10 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import { useAuth } from '../../../hooks';
 import { AppDispatch } from '../../../store';
 import { useDispatch } from 'react-redux';
-import { setCurrentConversation } from '../../../store/current-conversation.slice';
+import {
+  getMessagesThunk,
+  setCurrentConversation,
+} from '../../../store/current-conversation.slice';
 import { genConversationName } from '../../../utils/conversation';
 dayjs.extend(relativeTime);
 
@@ -17,6 +20,12 @@ export function Conversation({ data }: { data: IConversation }) {
 
   const onCLickConversation = () => {
     dispatch(setCurrentConversation(data));
+    dispatch(
+      getMessagesThunk({
+        conversartionId: data._id,
+        page: 1,
+      }),
+    );
   };
 
   return (

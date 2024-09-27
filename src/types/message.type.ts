@@ -7,7 +7,7 @@ export enum EMessageType {
 
 export interface IMessage {
   _id: string;
-  user: IUser;
+  user: string | IUser;
   conversation: string;
   type: EMessageType;
   content: string;
@@ -15,6 +15,6 @@ export interface IMessage {
 }
 
 export interface IGetMessagesParams {
-  projectId: string;
+  conversartionId: string;
   page: number;
 }

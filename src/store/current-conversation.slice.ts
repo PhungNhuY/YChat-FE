@@ -19,7 +19,7 @@ const initialState: ICurrentConversationState = {
 export const getMessagesThunk = createAsyncThunk(
   'currentConversation/getMessages',
   async (params: IGetMessagesParams) => {
-    return (await getMessages(params.projectId, params.page)) ?? [];
+    return (await getMessages(params.conversartionId, params.page)) ?? [];
   },
 );
 
@@ -29,6 +29,9 @@ export const currentConversationSlice = createSlice({
   reducers: {
     setCurrentConversation: (state, action: PayloadAction<IConversation>) => {
       state.conversation = action.payload;
+      state.messages = initialState.messages;
+      state.page = initialState.page;
+      state.loadingMessages = initialState.loadingMessages;
     },
   },
   extraReducers: (builder) => {

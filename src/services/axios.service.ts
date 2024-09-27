@@ -94,5 +94,5 @@ const showServiceUnavailableError = throttle(() => {
 }, THROTTLE_TIME);
 
 const showConnectionProblemError = throttle(() => {
-  globalValues.messageApi!.error('Connection problem! Please try again later!');
+  globalValues.messageApi!.error('You are offline!');
 }, THROTTLE_TIME);

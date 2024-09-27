@@ -16,7 +16,7 @@ export function Message({
   return (
     <div
       className={clsx(
-        'w-100 py-2 px-2 d-flex justify-content-start align-items-center',
+        'w-100 pb-2 px-2 d-flex justify-content-start align-items-center',
         mine && 'flex-row-reverse',
       )}
     >

@@ -3,14 +3,14 @@ import { IApiResponse, IMessage, IMultiItemsResponse } from '../types';
 import { axiosErrorHandler, axiosService } from './axios.service';
 
 export async function getMessages(
-  projectId: string,
+  conversartionId: string,
   page: number,
 ): Promise<Array<IMessage> | null> {
   const limit = 20;
   try {
     const response = (
       await axiosService.get(
-        `/messages/${projectId}?page=${page}&limit=${limit}`,
+        `/messages/${conversartionId}?page=${page}&limit=${limit}`,
       )
     ).data as IApiResponse<IMessage>;
     const { items: messages } = response.data as IMultiItemsResponse<IMessage>;

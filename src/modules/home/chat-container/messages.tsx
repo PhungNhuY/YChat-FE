@@ -9,6 +9,9 @@ export function Messages() {
   const currentConversation = useAppSelector(
     (state) => state.currentConversation.conversation!,
   );
+  const messages = useAppSelector(
+    (state) => state.currentConversation.messages,
+  );
   const memberMap = useRef<Map<string, IUser>>(new Map<string, IUser>());
 
   useEffect(() => {
@@ -22,7 +25,7 @@ export function Messages() {
         (m as IMember).user as IUser,
       );
     });
-  }, [currentConversation._id]);
+  }, []);
 
   return (
     <div
@@ -32,15 +35,14 @@ export function Messages() {
         'd-flex flex-column-reverse',
       )}
     >
-      <Message
-        message={currentConversation.lastMessage!}
-        currentUser={user}
-        author={
-          memberMap.current.get(
-            currentConversation.lastMessage!.user!._id,
-          ) as IUser
-        }
-      />
+      {messages.map((m) => (
+        <Message
+          key={m._id}
+          message={m}
+          currentUser={user}
+          author={memberMap.current.get(m.user as string) as IUser}
+        />
+      ))}
     </div>
   );
 }
