@@ -1,5 +1,6 @@
 import clsx from 'clsx';
-import { useAppSelector, useAuth } from '../../../hooks';
+import { useAuth } from '../../../hooks';
+import { useAppSelector } from '../../../store';
 import { Message } from './message';
 import { useEffect, useRef } from 'react';
 import { IMember, IUser } from '../../../types';

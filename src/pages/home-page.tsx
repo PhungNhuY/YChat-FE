@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import styles from './home-page.module.css';
 import { ConversationList } from '../modules/home/conversation-list/conversation-list';
 import { ChatContainer } from '../modules/home/chat-container/chat-container';
-import { useAppSelector } from '../hooks';
+import { useAppSelector } from '../store';
 
 export const HomePage = () => {
   const currentConversation = useAppSelector(

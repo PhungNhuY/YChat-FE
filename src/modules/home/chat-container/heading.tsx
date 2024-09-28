@@ -2,9 +2,10 @@ import { Avatar } from 'antd';
 import clsx from 'clsx';
 import { CgMoreAlt } from 'react-icons/cg';
 import styles from './chat-container.module.css';
-import { useAppSelector, useAuth } from '../../../hooks';
+import { useAppSelector } from '../../../store';
 import { IUser } from '../../../types';
 import { genConversationName } from '../../../utils/conversation';
+import { useAuth } from '../../../hooks';
 
 export function ChatContainerHeading() {
   const { user }: { user: IUser } = useAuth();

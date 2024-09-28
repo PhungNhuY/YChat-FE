@@ -5,6 +5,7 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { ConfigProvider } from 'antd';
 import { Provider as ReduxProvider } from 'react-redux';
 import { store } from './store';
+import { SocketContext, socket } from './socket';
 
 function App() {
   return (
@@ -17,7 +18,9 @@ function App() {
         }}
       >
         <AuthProvider>
-          <Routes />
+          <SocketContext.Provider value={socket}>
+            <Routes />
+          </SocketContext.Provider>
         </AuthProvider>
       </ConfigProvider>
     </ReduxProvider>

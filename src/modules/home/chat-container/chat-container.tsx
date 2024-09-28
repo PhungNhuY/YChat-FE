@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { ChatContainerHeading } from './heading';
 import { InputContainer } from './input-container';
-import { useAppSelector } from '../../../hooks';
+import { useAppSelector } from '../../../store';
 import { Messages } from './messages';
 
 export function ChatContainer() {
