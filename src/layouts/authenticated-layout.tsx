@@ -1,12 +1,13 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth, useSetup } from '../hooks';
 import { Avatar, Layout, Menu, MenuProps, theme } from 'antd';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { CommentOutlined, TeamOutlined } from '@ant-design/icons';
 import { IUser } from '../types';
 import styles from './authenticated-layout.module.css';
 import clsx from 'clsx';
 import { LocalStorageService } from '../services';
+import { SocketContext } from '../socket';
 
 const { Content, Sider } = Layout;
 
@@ -36,6 +37,18 @@ export function AuthenticatedLayout() {
   );
   const [contextHolder] = useSetup();
   const { token } = theme.useToken();
+
+  const socket = useContext(SocketContext);
+
+  useEffect(() => {
+    // connect to socket
+    socket.connect();
+
+    return () => {
+      // disconnect when component unmount, it means user logged out
+      socket.disconnect();
+    };
+  }, []);
 
   const onCLickMenu: MenuProps['onClick'] = (e: any) => {
     switch (e.key) {

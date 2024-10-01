@@ -5,7 +5,7 @@ import { IConversation, IUser } from '../../../types';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useAuth } from '../../../hooks';
-import { AppDispatch } from '../../../store';
+import { AppDispatch, useAppSelector } from '../../../store';
 import { useDispatch } from 'react-redux';
 import {
   getMessagesThunk,
@@ -17,15 +17,20 @@ dayjs.extend(relativeTime);
 export function Conversation({ data }: { data: IConversation }) {
   const { user }: { user: IUser } = useAuth();
   const dispatch = useDispatch<AppDispatch>();
+  const currentConversation = useAppSelector(
+    (state) => state.currentConversation.conversation,
+  );
 
   const onCLickConversation = () => {
-    dispatch(setCurrentConversation(data));
-    dispatch(
-      getMessagesThunk({
-        conversartionId: data._id,
-        page: 1,
-      }),
-    );
+    if (data._id !== currentConversation?._id) {
+      dispatch(setCurrentConversation(data));
+      dispatch(
+        getMessagesThunk({
+          conversartionId: data._id,
+          page: 1,
+        }),
+      );
+    }
   };
 
   return (
