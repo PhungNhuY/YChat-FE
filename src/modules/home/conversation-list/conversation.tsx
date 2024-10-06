@@ -12,6 +12,9 @@ import {
   setCurrentConversation,
 } from '../../../store/current-conversation.slice';
 import { genConversationName } from '../../../utils/conversation';
+import { useContext } from 'react';
+import { SocketContext } from '../../../socket';
+import { globalValues } from '../../../utils';
 dayjs.extend(relativeTime);
 
 export function Conversation({ data }: { data: IConversation }) {
@@ -20,8 +23,16 @@ export function Conversation({ data }: { data: IConversation }) {
   const currentConversation = useAppSelector(
     (state) => state.currentConversation.conversation,
   );
+  const socket = useContext(SocketContext);
 
   const onCLickConversation = () => {
+    // socket must be connected before load messages
+    if (!socket.connected) {
+      globalValues.messageApi?.error('You are offline!');
+      return;
+    }
+
+    // load messages
     if (data._id !== currentConversation?._id) {
       dispatch(setCurrentConversation(data));
       dispatch(
