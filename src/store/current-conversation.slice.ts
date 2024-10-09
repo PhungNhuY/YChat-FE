@@ -19,7 +19,7 @@ const initialState: ICurrentConversationState = {
 export const getMessagesThunk = createAsyncThunk(
   'currentConversation/getMessages',
   async (params: IGetMessagesParams) => {
-    return (await getMessages(params.conversartionId, params.page)) ?? [];
+    return (await getMessages(params.conversartionId)) ?? [];
   },
 );
 
