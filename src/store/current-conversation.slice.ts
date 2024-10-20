@@ -1,19 +1,17 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IConversation, IGetMessagesParams, IMessage } from '../types';
+import { IConversation, IGetMessagesParams, IMessage, IUser } from '../types';
 import { getMessages } from '../services';
 
 export interface ICurrentConversationState {
   conversation: IConversation | null;
   messages: Array<IMessage>;
   loadingMessages: boolean;
-  page: 0;
 }
 
 const initialState: ICurrentConversationState = {
   conversation: null,
   messages: [],
   loadingMessages: false,
-  page: 0,
 };
 
 export const getMessagesThunk = createAsyncThunk(
@@ -30,8 +28,17 @@ export const currentConversationSlice = createSlice({
     setCurrentConversation: (state, action: PayloadAction<IConversation>) => {
       state.conversation = action.payload;
       state.messages = initialState.messages;
-      state.page = initialState.page;
       state.loadingMessages = initialState.loadingMessages;
+    },
+    addNewMessageToCurrentConversation: (
+      state,
+      action: PayloadAction<IMessage>,
+    ) => {
+      const newMessage = action.payload;
+      newMessage.user = (newMessage.user as IUser)._id;
+      if (state.conversation?._id === action.payload.conversation) {
+        state.messages.unshift(action.payload);
+      }
     },
   },
   extraReducers: (builder) => {
@@ -44,7 +51,6 @@ export const currentConversationSlice = createSlice({
           }
         });
         state.loadingMessages = false;
-        state.page += 1;
       })
       .addCase(getMessagesThunk.pending, (state) => {
         state.loadingMessages = true;
@@ -52,5 +58,6 @@ export const currentConversationSlice = createSlice({
   },
 });
 
-export const { setCurrentConversation } = currentConversationSlice.actions;
+export const { setCurrentConversation, addNewMessageToCurrentConversation } =
+  currentConversationSlice.actions;
 export default currentConversationSlice.reducer;

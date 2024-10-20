@@ -7,7 +7,8 @@ import { IUser } from '../types';
 import styles from './authenticated-layout.module.css';
 import clsx from 'clsx';
 import { LocalStorageService } from '../services';
-import { SocketContext } from '../socket';
+import { SocketContext } from '../services/socket.service';
+import { EventListener } from './event-listener';
 
 const { Content, Sider } = Layout;
 
@@ -63,6 +64,7 @@ export function AuthenticatedLayout() {
   return (
     <>
       {contextHolder}
+      <EventListener />
       <Layout className="vh-100">
         <Sider
           collapsible

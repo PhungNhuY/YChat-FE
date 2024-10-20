@@ -13,7 +13,7 @@ import {
 } from '../../../store/current-conversation.slice';
 import { genConversationName } from '../../../utils/conversation';
 import { useContext } from 'react';
-import { SocketContext } from '../../../socket';
+import { SocketContext } from '../../../services/socket.service';
 import { globalValues } from '../../../utils';
 dayjs.extend(relativeTime);
 

@@ -6,7 +6,9 @@ import {
   IMultiItemsResponse,
 } from '../types';
 import { axiosErrorHandler, axiosService } from './axios.service';
-import { SessionStorageService } from './session-storage.service';
+import { FETCH_MESSAGES_LIMIT } from '../constants';
+
+const cache = new Map<string, Array<IMessage>>();
 
 export async function getMessages(
   conversationId: string,
@@ -14,29 +16,24 @@ export async function getMessages(
 ): Promise<Array<IMessage> | null> {
   if (!before) {
     // get cached messages
-    const cachedMessages = SessionStorageService.getObject<Array<IMessage>>(
-      `messages:${conversationId}`,
-    );
+    const cachedMessages = cache.get(conversationId);
     if (cachedMessages) {
       return cachedMessages;
     }
   }
 
   // fecth messages
-  const limit = 20;
   try {
     const response = (
       await axiosService.get(
-        `conversations/${conversationId}/messages?limit=${limit}${before ? `&before=${before}` : ''}`,
+        `conversations/${conversationId}/messages?limit=${FETCH_MESSAGES_LIMIT}${before ? `&before=${before}` : ''}`,
       )
     ).data as IApiResponse<IMessage>;
     const { items: messages } = response.data as IMultiItemsResponse<IMessage>;
 
     // cache messages
-    const cachedMessages = SessionStorageService.getObject<Array<IMessage>>(
-      `messages:${conversationId}`,
-    );
-    if (Array.isArray(cachedMessages)) {
+    if (cache.has(conversationId)) {
+      const cachedMessages = cache.get(conversationId)!;
       messages.forEach((m) => {
         // add the message if it doesn't exist in the list
         if (!cachedMessages.some((m2) => m2._id === m._id)) {
@@ -44,7 +41,7 @@ export async function getMessages(
         }
       });
     } else {
-      SessionStorageService.setObject(`messages:${conversationId}`, messages);
+      cache.set(conversationId, messages);
     }
 
     return messages;
@@ -76,4 +73,13 @@ export async function sendMessage(
     }
   }
   return false;
+}
+
+export async function addNewMessage(conversationId: string, message: IMessage) {
+  const messages = cache.get(conversationId);
+  if (messages) {
+    messages.unshift(message);
+  } else {
+    cache.set(conversationId, [message]);
+  }
 }

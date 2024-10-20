@@ -1,11 +1,11 @@
 import './App.css';
-import { AuthProvider } from './providers';
+import { AuthProvider } from './context';
 import Routes from './router';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import { ConfigProvider } from 'antd';
 import { Provider as ReduxProvider } from 'react-redux';
 import { store } from './store';
-import { SocketContext, socket } from './socket';
+import { SocketContext, socket } from './services/socket.service';
 
 function App() {
   return (
