@@ -17,19 +17,21 @@ export const HomePage = () => {
         >
           <ConversationList />
         </div>
-        <div
-          className={clsx(styles.block, styles.block2)}
-          id="home-chat-container"
-        >
-          <ChatContainer />
-        </div>
         {currentConversation && (
-          <div
-            className={clsx(styles.block, styles.block3)}
-            id="home-conversation-info"
-          >
-            3
-          </div>
+          <>
+            <div
+              className={clsx(styles.block, styles.block2)}
+              id="home-chat-container"
+            >
+              <ChatContainer />
+            </div>
+            <div
+              className={clsx(styles.block, styles.block3)}
+              id="home-conversation-info"
+            >
+              3
+            </div>
+          </>
         )}
       </div>
     </div>
