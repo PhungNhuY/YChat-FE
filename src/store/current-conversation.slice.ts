@@ -21,6 +21,26 @@ export const getMessagesThunk = createAsyncThunk(
   },
 );
 
+export const loadMoreMessagesThunk = createAsyncThunk(
+  'currentConversation/loadMoreMessages',
+  async (_, { getState }) => {
+    const state = getState() as ICurrentConversationState;
+    if (state.conversation) {
+      if (state.messages.length > 0) {
+        return (
+          (await getMessages(
+            state.conversation._id,
+            state.messages[state.messages.length - 1].createdAt.toISOString(),
+          )) ?? []
+        );
+      } else {
+        return (await getMessages(state.conversation._id)) ?? [];
+      }
+    }
+    return [];
+  },
+);
+
 export const currentConversationSlice = createSlice({
   name: 'currentConversation',
   initialState,
@@ -53,6 +73,18 @@ export const currentConversationSlice = createSlice({
         state.loadingMessages = false;
       })
       .addCase(getMessagesThunk.pending, (state) => {
+        state.loadingMessages = true;
+      })
+      .addCase(loadMoreMessagesThunk.fulfilled, (state, action) => {
+        action.payload.forEach((m) => {
+          // add the message if it doesn't exist in the list
+          if (!state.messages.some((m2) => m2._id === m._id)) {
+            state.messages.push(m);
+          }
+        });
+        state.loadingMessages = false;
+      })
+      .addCase(loadMoreMessagesThunk.pending, (state) => {
         state.loadingMessages = true;
       });
   },
