@@ -11,10 +11,9 @@ export interface IMessage {
   conversation: string;
   type: EMessageType;
   content: string;
-  createdAt: Date;
+  createdAt: string;
 }
 
 export interface IGetMessagesParams {
   conversartionId: string;
-  page: number;
 }

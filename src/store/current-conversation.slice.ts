@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IConversation, IGetMessagesParams, IMessage, IUser } from '../types';
 import { getMessages } from '../services';
+import { RootState } from '.';
 
 export interface ICurrentConversationState {
   conversation: IConversation | null;
@@ -24,20 +25,15 @@ export const getMessagesThunk = createAsyncThunk(
 export const loadMoreMessagesThunk = createAsyncThunk(
   'currentConversation/loadMoreMessages',
   async (_, { getState }) => {
-    const state = getState() as ICurrentConversationState;
-    if (state.conversation) {
-      if (state.messages.length > 0) {
-        return (
-          (await getMessages(
-            state.conversation._id,
-            state.messages[state.messages.length - 1].createdAt.toISOString(),
-          )) ?? []
-        );
-      } else {
-        return (await getMessages(state.conversation._id)) ?? [];
-      }
+    const currentConversation = (getState() as RootState).currentConversation;
+    if (currentConversation.conversation) {
+      const oldestMessage =
+        currentConversation.messages[currentConversation.messages.length - 1];
+      return await getMessages(
+        currentConversation.conversation._id,
+        oldestMessage ? oldestMessage.createdAt : undefined,
+      );
     }
-    return [];
   },
 );
 
@@ -63,6 +59,8 @@ export const currentConversationSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+
+      // get messages
       .addCase(getMessagesThunk.fulfilled, (state, action) => {
         action.payload.forEach((m) => {
           // add the message if it doesn't exist in the list
@@ -75,8 +73,10 @@ export const currentConversationSlice = createSlice({
       .addCase(getMessagesThunk.pending, (state) => {
         state.loadingMessages = true;
       })
+
+      // load more messages
       .addCase(loadMoreMessagesThunk.fulfilled, (state, action) => {
-        action.payload.forEach((m) => {
+        action.payload?.forEach((m) => {
           // add the message if it doesn't exist in the list
           if (!state.messages.some((m2) => m2._id === m._id)) {
             state.messages.push(m);

@@ -1,21 +1,28 @@
 import clsx from 'clsx';
 import { useAuth } from '../../../hooks';
-import { useAppSelector } from '../../../store';
+import { AppDispatch, useAppSelector } from '../../../store';
 import { Message } from './message';
 import { useCallback, useEffect, useRef } from 'react';
 import { IMember, IUser } from '../../../types';
 import { debounce } from 'lodash';
+import { useDispatch } from 'react-redux';
+import { loadMoreMessagesThunk } from '../../../store/current-conversation.slice';
+import { Spin } from 'antd';
 
-const scrollThreshold = 200;
-const debounceTime = 300;
+const scrollThreshold = 300;
+const debounceTime = 200;
 
 export function Messages() {
   const { user }: { user: IUser } = useAuth();
+  const dispatch = useDispatch<AppDispatch>();
   const currentConversation = useAppSelector(
     (state) => state.currentConversation.conversation!,
   );
   const messages = useAppSelector(
     (state) => state.currentConversation.messages,
+  );
+  const loadingMessages = useAppSelector(
+    (state) => state.currentConversation.loadingMessages,
   );
   const memberMap = useRef<Map<string, IUser>>(new Map<string, IUser>());
 
@@ -37,7 +44,8 @@ export function Messages() {
   const messagesRef = useRef<HTMLDivElement>(null);
   const onScrollToTop = useCallback(
     debounce(() => {
-      console.log('top');
+      // console.log('top');
+      dispatch(loadMoreMessagesThunk());
     }, debounceTime),
     [],
   );
@@ -77,7 +85,11 @@ export function Messages() {
       id="messages-wrapper-element"
       ref={wrapperRef}
     >
-      <div className="" id="messages-element" ref={messagesRef}>
+      <div
+        className="d-flex flex-column-reverse"
+        id="messages-element"
+        ref={messagesRef}
+      >
         {messages.map((m) => (
           <Message
             key={m._id}
@@ -87,6 +99,7 @@ export function Messages() {
           />
         ))}
       </div>
+      {loadingMessages && <Spin className="py-2" />}
     </div>
   );
 }

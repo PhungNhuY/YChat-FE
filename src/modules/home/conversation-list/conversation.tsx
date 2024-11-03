@@ -38,7 +38,6 @@ export function Conversation({ data }: { data: IConversation }) {
       dispatch(
         getMessagesThunk({
           conversartionId: data._id,
-          page: 1,
         }),
       );
     }
