@@ -51,8 +51,8 @@ export async function getMessages(
     } else {
       console.log('error:  ', error);
     }
+    return null;
   }
-  return null;
 }
 
 export async function sendMessage(

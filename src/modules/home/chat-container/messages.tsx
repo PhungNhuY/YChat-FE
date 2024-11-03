@@ -24,6 +24,12 @@ export function Messages() {
   const loadingMessages = useAppSelector(
     (state) => state.currentConversation.loadingMessages,
   );
+  const allMessagesLoaded = useAppSelector(
+    (state) => state.currentConversation.allMessagesLoaded,
+  );
+  const firstLoadExecuted = useAppSelector(
+    (state) => state.currentConversation.firstLoadExecuted,
+  );
   const memberMap = useRef<Map<string, IUser>>(new Map<string, IUser>());
 
   useEffect(() => {
@@ -45,9 +51,11 @@ export function Messages() {
   const onScrollToTop = useCallback(
     debounce(() => {
       // console.log('top');
-      dispatch(loadMoreMessagesThunk());
+      if (!allMessagesLoaded) {
+        dispatch(loadMoreMessagesThunk());
+      }
     }, debounceTime),
-    [],
+    [allMessagesLoaded],
   );
   useEffect(() => {
     // define onScroll function
@@ -73,7 +81,19 @@ export function Messages() {
         wrapperRef.current.removeEventListener('scroll', onScrollFunction);
       }
     };
-  }, []);
+  }, [allMessagesLoaded]);
+  useEffect(() => {
+    if (
+      firstLoadExecuted &&
+      messages &&
+      !allMessagesLoaded &&
+      messagesRef.current &&
+      wrapperRef.current &&
+      messagesRef.current.clientHeight <= wrapperRef.current.clientHeight
+    ) {
+      dispatch(loadMoreMessagesThunk());
+    }
+  }, [messages, firstLoadExecuted, allMessagesLoaded]);
 
   return (
     <div
@@ -90,14 +110,15 @@ export function Messages() {
         id="messages-element"
         ref={messagesRef}
       >
-        {messages.map((m) => (
-          <Message
-            key={m._id}
-            message={m}
-            currentUser={user}
-            author={memberMap.current.get(m.user as string) as IUser}
-          />
-        ))}
+        {messages &&
+          messages.map((m) => (
+            <Message
+              key={m._id}
+              message={m}
+              currentUser={user}
+              author={memberMap.current.get(m.user as string) as IUser}
+            />
+          ))}
       </div>
       {loadingMessages && <Spin className="py-2" />}
     </div>

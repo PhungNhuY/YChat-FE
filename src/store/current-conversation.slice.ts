@@ -5,14 +5,18 @@ import { RootState } from '.';
 
 export interface ICurrentConversationState {
   conversation: IConversation | null;
-  messages: Array<IMessage>;
+  messages: Array<IMessage> | null;
   loadingMessages: boolean;
+  allMessagesLoaded: boolean;
+  firstLoadExecuted: boolean;
 }
 
 const initialState: ICurrentConversationState = {
   conversation: null,
-  messages: [],
+  messages: null,
   loadingMessages: false,
+  allMessagesLoaded: false,
+  firstLoadExecuted: false,
 };
 
 export const getMessagesThunk = createAsyncThunk(
@@ -26,7 +30,7 @@ export const loadMoreMessagesThunk = createAsyncThunk(
   'currentConversation/loadMoreMessages',
   async (_, { getState }) => {
     const currentConversation = (getState() as RootState).currentConversation;
-    if (currentConversation.conversation) {
+    if (currentConversation.conversation && currentConversation.messages) {
       const oldestMessage =
         currentConversation.messages[currentConversation.messages.length - 1];
       return await getMessages(
@@ -53,6 +57,7 @@ export const currentConversationSlice = createSlice({
       const newMessage = action.payload;
       newMessage.user = (newMessage.user as IUser)._id;
       if (state.conversation?._id === action.payload.conversation) {
+        if (state.messages === null) state.messages = [];
         state.messages.unshift(action.payload);
       }
     },
@@ -63,12 +68,14 @@ export const currentConversationSlice = createSlice({
       // get messages
       .addCase(getMessagesThunk.fulfilled, (state, action) => {
         action.payload.forEach((m) => {
+          if (state.messages === null) state.messages = [];
           // add the message if it doesn't exist in the list
           if (!state.messages.some((m2) => m2._id === m._id)) {
             state.messages.push(m);
           }
         });
         state.loadingMessages = false;
+        state.firstLoadExecuted = true;
       })
       .addCase(getMessagesThunk.pending, (state) => {
         state.loadingMessages = true;
@@ -76,7 +83,11 @@ export const currentConversationSlice = createSlice({
 
       // load more messages
       .addCase(loadMoreMessagesThunk.fulfilled, (state, action) => {
+        if (action.payload?.length === 0) {
+          state.allMessagesLoaded = true;
+        }
         action.payload?.forEach((m) => {
+          if (state.messages === null) state.messages = [];
           // add the message if it doesn't exist in the list
           if (!state.messages.some((m2) => m2._id === m._id)) {
             state.messages.push(m);
