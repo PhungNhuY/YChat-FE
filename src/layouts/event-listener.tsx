@@ -24,6 +24,6 @@ export function EventListener() {
     return () => {
       socket.off(ON_MESSAGE);
     };
-  });
+  }, []);
   return null;
 }
