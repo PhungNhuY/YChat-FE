@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth, useSetup } from '../hooks';
-import { Avatar, Layout, Menu, MenuProps, theme } from 'antd';
+import { Avatar, Layout, Menu, MenuProps, Popover, theme } from 'antd';
 import { useContext, useEffect, useState } from 'react';
 import { CommentOutlined, TeamOutlined } from '@ant-design/icons';
 import { IUser } from '../types';
@@ -9,6 +9,7 @@ import clsx from 'clsx';
 import { LocalStorageService } from '../services';
 import { SocketContext } from '../services/socket.service';
 import { EventListener } from './event-listener';
+import { PopoverButton } from '../components';
 
 const { Content, Sider } = Layout;
 
@@ -97,11 +98,24 @@ export function AuthenticatedLayout() {
                 style={{ border: 0 }}
               />
             </div>
-            <div
+            <Popover
               className={clsx(
                 'd-flex justify-content-center align-items-center',
                 styles.profile,
               )}
+              placement="topLeft"
+              trigger={'click'}
+              content={
+                <div style={{ width: 300 }}>
+                  <PopoverButton text="Option" onClick={() => {}} />
+                  <hr className="my-1 mx-2" />
+                  <PopoverButton text="Help" onClick={() => {}} />
+                  <PopoverButton text="Crash report" onClick={() => {}} />
+                  <PopoverButton text="Terms of use" onClick={() => {}} />
+                  <hr className="my-1 mx-2" />
+                  <PopoverButton text="Logout" onClick={() => {}} />
+                </div>
+              }
             >
               <Avatar className="me-1">{user.name[0]}</Avatar>
               <span
@@ -111,7 +125,7 @@ export function AuthenticatedLayout() {
               >
                 {user.name}
               </span>
-            </div>
+            </Popover>
           </div>
         </Sider>
         <Layout className="vh-100">

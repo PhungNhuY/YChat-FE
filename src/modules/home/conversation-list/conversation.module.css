@@ -9,3 +9,7 @@
 .wrapper:hover {
   background-color: #f5f5f5;
 }
+
+.wrapper.active {
+  background-color: #f0f0f0;
+}

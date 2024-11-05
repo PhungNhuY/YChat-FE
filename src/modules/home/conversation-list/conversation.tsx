@@ -47,6 +47,7 @@ export function Conversation({ data }: { data: IConversation }) {
     <div
       className={clsx(
         styles.wrapper,
+        data._id === currentConversation?._id && styles.active,
         'd-flex justify-content-between align-items-center gap-2',
       )}
       onClick={onCLickConversation}
