@@ -10,6 +10,10 @@ import { LocalStorageService } from '../services';
 import { SocketContext } from '../services/socket.service';
 import { EventListener } from './event-listener';
 import { PopoverButton } from '../components';
+import { MdOutlineHelp, MdSettings } from 'react-icons/md';
+import { PiWarningFill } from 'react-icons/pi';
+import { GrTextAlignFull } from 'react-icons/gr';
+import { TbLogout } from 'react-icons/tb';
 
 const { Content, Sider } = Layout;
 
@@ -106,14 +110,34 @@ export function AuthenticatedLayout() {
               placement="topLeft"
               trigger={'click'}
               content={
-                <div style={{ width: 300 }}>
-                  <PopoverButton text="Option" onClick={() => {}} />
-                  <hr className="my-1 mx-2" />
-                  <PopoverButton text="Help" onClick={() => {}} />
-                  <PopoverButton text="Crash report" onClick={() => {}} />
-                  <PopoverButton text="Terms of use" onClick={() => {}} />
-                  <hr className="my-1 mx-2" />
-                  <PopoverButton text="Logout" onClick={() => {}} />
+                <div style={{ width: 250 }}>
+                  <PopoverButton
+                    text="Option"
+                    onClick={() => {}}
+                    icon={<MdSettings size={20} />}
+                  />
+                  <hr className="m-1" />
+                  <PopoverButton
+                    text="Help"
+                    onClick={() => {}}
+                    icon={<MdOutlineHelp size={20} />}
+                  />
+                  <PopoverButton
+                    text="Crash report"
+                    onClick={() => {}}
+                    icon={<PiWarningFill size={20} />}
+                  />
+                  <PopoverButton
+                    text="Terms of use"
+                    onClick={() => {}}
+                    icon={<GrTextAlignFull size={20} />}
+                  />
+                  <hr className="m-1" />
+                  <PopoverButton
+                    text="Logout"
+                    onClick={() => {}}
+                    icon={<TbLogout size={20} />}
+                  />
                 </div>
               }
             >

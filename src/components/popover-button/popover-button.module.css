@@ -2,6 +2,9 @@
   height: 44px;
   padding: 8px;
   margin: 0px 4px;
+  display: flex;
+  justify-content: left;
+  align-items: center;
 }
 
 .btn:hover {
