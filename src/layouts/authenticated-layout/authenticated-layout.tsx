@@ -1,19 +1,19 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth, useSetup } from '../hooks';
+import { useAuth, useSetup } from '../../hooks';
 import { Avatar, Layout, Menu, MenuProps, Popover, theme } from 'antd';
 import { useContext, useEffect, useState } from 'react';
 import { CommentOutlined, TeamOutlined } from '@ant-design/icons';
-import { IUser } from '../types';
+import { IUser } from '../../types';
 import styles from './authenticated-layout.module.css';
 import clsx from 'clsx';
-import { LocalStorageService } from '../services';
-import { SocketContext } from '../services/socket.service';
-import { EventListener } from './event-listener';
-import { PopoverButton } from '../components';
+import { LocalStorageService } from '../../services';
+import { SocketContext } from '../../services/socket.service';
+import { EventListener } from '../event-listener';
+import { PopoverButton } from '../../components';
 import { MdOutlineHelp, MdSettings } from 'react-icons/md';
 import { PiWarningFill } from 'react-icons/pi';
 import { GrTextAlignFull } from 'react-icons/gr';
-import { TbLogout } from 'react-icons/tb';
+import { LogoutButton } from './logout-button';
 
 const { Content, Sider } = Layout;
 
@@ -133,11 +133,7 @@ export function AuthenticatedLayout() {
                     icon={<GrTextAlignFull size={20} />}
                   />
                   <hr className="m-1" />
-                  <PopoverButton
-                    text="Logout"
-                    onClick={() => {}}
-                    icon={<TbLogout size={20} />}
-                  />
+                  <LogoutButton />
                 </div>
               }
             >

@@ -1,5 +1,5 @@
 import { message } from 'antd';
-import { useAuth } from './useAuth';
+import { useAuth } from './use-auth';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { globalValues } from '../utils';

@@ -1,21 +1,12 @@
 import { Button, Form, FormProps, Input } from 'antd';
 import { Ilogin } from '../../types';
-import { AuthStorageService, login } from '../../services';
-import { useAuth } from '../../hooks';
+import { useLogin } from '../../hooks';
 
 export default function LoginForm() {
-  const { setUser } = useAuth();
+  const login = useLogin();
 
   const onFinish: FormProps<Ilogin>['onFinish'] = async (values: Ilogin) => {
-    const user = await login(values);
-    if (user) {
-      AuthStorageService.setLoginUser(user);
-      setUser({
-        ...user,
-        access_token: undefined,
-        refresh_token: undefined,
-      });
-    }
+    login(values);
   };
 
   return (

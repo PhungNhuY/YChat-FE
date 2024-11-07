@@ -3,7 +3,7 @@ import {
   RouteObject,
   RouterProvider,
 } from 'react-router-dom';
-import { AuthenticatedLayout } from '../layouts/authenticated-layout';
+import { AuthenticatedLayout } from '../layouts/authenticated-layout/authenticated-layout';
 import { UnauthenticatedLayout } from '../layouts/unauthenticated-layout';
 import { ErrorPage, HomePage, LoginPage, NotFoundPage } from '../pages';
 
