@@ -16,3 +16,7 @@ export async function login(loginData: Ilogin): Promise<IUser | null> {
   }
   return null;
 }
+
+export async function logout() {
+  await axiosService.get('auth/logout');
+}
