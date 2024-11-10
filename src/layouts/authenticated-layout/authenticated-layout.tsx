@@ -14,6 +14,7 @@ import { MdOutlineHelp, MdSettings } from 'react-icons/md';
 import { PiWarningFill } from 'react-icons/pi';
 import { GrTextAlignFull } from 'react-icons/gr';
 import { LogoutButton } from './logout-button';
+import { globalValues } from '../../utils';
 
 const { Content, Sider } = Layout;
 
@@ -119,17 +120,29 @@ export function AuthenticatedLayout() {
                   <hr className="m-1" />
                   <PopoverButton
                     text="Help"
-                    onClick={() => {}}
+                    onClick={() =>
+                      globalValues.messageApi?.warning(
+                        'This feature is not available yet!',
+                      )
+                    }
                     icon={<MdOutlineHelp size={20} />}
                   />
                   <PopoverButton
                     text="Crash report"
-                    onClick={() => {}}
+                    onClick={() =>
+                      globalValues.messageApi?.warning(
+                        'This feature is not available yet!',
+                      )
+                    }
                     icon={<PiWarningFill size={20} />}
                   />
                   <PopoverButton
                     text="Terms of use"
-                    onClick={() => {}}
+                    onClick={() =>
+                      globalValues.messageApi?.warning(
+                        'This feature is not available yet!',
+                      )
+                    }
                     icon={<GrTextAlignFull size={20} />}
                   />
                   <hr className="m-1" />
