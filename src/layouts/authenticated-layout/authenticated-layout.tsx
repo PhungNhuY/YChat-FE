@@ -1,5 +1,5 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAuth, useSetup } from '../../hooks';
+import { useAuth, useEventListener, useSetup } from '../../hooks';
 import { Avatar, Layout, Menu, MenuProps, Popover, theme } from 'antd';
 import { useContext, useEffect, useState } from 'react';
 import { CommentOutlined, TeamOutlined } from '@ant-design/icons';
@@ -8,7 +8,6 @@ import styles from './authenticated-layout.module.css';
 import clsx from 'clsx';
 import { LocalStorageService } from '../../services';
 import { SocketContext } from '../../services/socket.service';
-import { EventListener } from '../event-listener';
 import { PopoverButton } from '../../components';
 import { MdOutlineHelp, MdSettings } from 'react-icons/md';
 import { PiWarningFill } from 'react-icons/pi';
@@ -57,6 +56,8 @@ export function AuthenticatedLayout() {
     };
   }, []);
 
+  useEventListener();
+
   const onCLickMenu: MenuProps['onClick'] = (e: any) => {
     switch (e.key) {
       case 'conversation':
@@ -70,7 +71,6 @@ export function AuthenticatedLayout() {
   return (
     <>
       {contextHolder}
-      <EventListener />
       <Layout className="vh-100">
         <Sider
           collapsible

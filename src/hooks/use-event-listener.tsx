@@ -8,7 +8,7 @@ import { addNewMessage } from '../services';
 import { ON_MESSAGE } from '../constants/socket';
 import { addNewMessageToCurrentConversation } from '../store/current-conversation.slice';
 
-export function EventListener() {
+export function useEventListener() {
   const socket = useContext(SocketContext);
   const dispatch = useDispatch<AppDispatch>();
 
