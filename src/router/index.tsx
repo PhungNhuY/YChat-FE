@@ -5,7 +5,13 @@ import {
 } from 'react-router-dom';
 import { AuthenticatedLayout } from '../layouts/authenticated-layout/authenticated-layout';
 import { UnauthenticatedLayout } from '../layouts/unauthenticated-layout';
-import { ErrorPage, HomePage, LoginPage, NotFoundPage } from '../pages';
+import {
+  ErrorPage,
+  HomePage,
+  LoginPage,
+  NotFoundPage,
+  PeoplePage,
+} from '../pages';
 
 // Define public routes accessible by all users
 const routesForPublic: Array<RouteObject> = [];
@@ -20,6 +26,10 @@ const routesForAuthenticatedOnly: Array<RouteObject> = [
       {
         index: true,
         element: <HomePage />,
+      },
+      {
+        path: 'people',
+        element: <PeoplePage />,
       },
     ],
   },

@@ -1,4 +1,4 @@
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth, useEventListener, useSetup } from '../../hooks';
 import { Avatar, Layout, Menu, MenuProps, Popover, theme } from 'antd';
 import { useContext, useEffect, useState } from 'react';
@@ -44,8 +44,8 @@ export function AuthenticatedLayout() {
   const [contextHolder] = useSetup();
   const { token } = theme.useToken();
 
+  // connect to socket
   const socket = useContext(SocketContext);
-
   useEffect(() => {
     // connect to socket
     socket.connect();
@@ -55,15 +55,32 @@ export function AuthenticatedLayout() {
       socket.disconnect();
     };
   }, []);
-
+  // listen events
   useEventListener();
 
+  // caculate selected tabs from current path
+  const location = useLocation();
+  const [selectedTabs, setSelectedTabs] = useState<string>('');
+  useEffect(() => {
+    setSelectedTabs(
+      location.pathname === '/'
+        ? 'conversations'
+        : location.pathname.startsWith('/people')
+          ? 'people'
+          : '',
+    );
+  }, [location]);
+
+  // hadle click menu
+  const navigate = useNavigate();
   const onCLickMenu: MenuProps['onClick'] = (e: any) => {
     switch (e.key) {
-      case 'conversation':
+      case 'conversations':
+        navigate('/');
         break;
 
       case 'people':
+        navigate('/people');
         break;
     }
   };
@@ -98,7 +115,7 @@ export function AuthenticatedLayout() {
               <Menu
                 theme="light"
                 items={items}
-                defaultSelectedKeys={['conversations']}
+                selectedKeys={[selectedTabs]}
                 onClick={onCLickMenu}
                 style={{ border: 0 }}
               />
