@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import styles from './people-page.module.css';
+import { PeopleMenu } from '../modules/people/menu/people-menu';
 
 export function PeoplePage() {
   return (
@@ -8,7 +9,9 @@ export function PeoplePage() {
         <div
           className={clsx(styles.block, styles.block1)}
           id="people-left-sidebar"
-        ></div>
+        >
+          <PeopleMenu />
+        </div>
         <div
           className={clsx(styles.block, styles.block2)}
           id="people-content"
