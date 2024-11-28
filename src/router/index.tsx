@@ -10,8 +10,11 @@ import {
   HomePage,
   LoginPage,
   NotFoundPage,
-  PeoplePage,
+  PeopleFriendsPage,
+  PeopleGroupsPage,
+  PeopleInvitationPage,
 } from '../pages';
+import { PeoplePageLayout } from '../modules/people';
 
 // Define public routes accessible by all users
 const routesForPublic: Array<RouteObject> = [];
@@ -29,7 +32,21 @@ const routesForAuthenticatedOnly: Array<RouteObject> = [
       },
       {
         path: 'people',
-        element: <PeoplePage />,
+        element: <PeoplePageLayout />,
+        children: [
+          {
+            index: true,
+            element: <PeopleFriendsPage />,
+          },
+          {
+            path: 'groups',
+            element: <PeopleGroupsPage />,
+          },
+          {
+            path: 'invitation',
+            element: <PeopleInvitationPage />,
+          },
+        ],
       },
     ],
   },
