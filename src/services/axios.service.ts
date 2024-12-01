@@ -1,4 +1,4 @@
-import axios, { AxiosError, HttpStatusCode } from 'axios';
+import axios, { AxiosError, AxiosRequestConfig, HttpStatusCode } from 'axios';
 import { throttle } from 'lodash';
 import { globalValues } from '../utils';
 import { AuthStorageService } from './auth-storage.service';
@@ -11,6 +11,28 @@ export const axiosService = axios.create({
   withCredentials: true,
 });
 
+// handle refresh token
+// the refresh action only run once at a time
+// see https://gist.github.com/Godofbrowser/bf118322301af3fc334437c683887c5f
+let isRefreshing = false;
+let failedQueue: Array<{
+  resolve: (value?: unknown) => void;
+  reject: (reason?: any) => void;
+}> = [];
+const proccessQueue = (error: any) => {
+  // exec processes
+  failedQueue.forEach((prom) => {
+    if (error) {
+      prom.reject(error);
+    } else {
+      prom.resolve();
+    }
+  });
+
+  // clear queue
+  failedQueue = [];
+};
+
 axiosService.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -19,21 +41,44 @@ axiosService.interceptors.response.use(
       error.config.url.indexOf('/auth/refresh') !== 0
     ) {
       // try to get new access token and retry failed api
-      const originalRequest = error.config;
+      const originalRequest: AxiosRequestConfig & { _retry?: boolean } =
+        error.config;
       if (error.response?.status === 401 && !originalRequest._retry) {
-        originalRequest._retry = true;
-        try {
-          // get new access token
-          await axiosService.get('/auth/refresh');
-          // retry request
-          return axios(originalRequest);
-        } catch (error: any) {
-          if (error.response.status === 401) {
-            globalValues.setUser!({});
-            AuthStorageService.resetAll();
-            globalValues.navigate!('/login');
-          } else {
-            return Promise.reject(error);
+        // if refresh action is already in progress
+        if (isRefreshing) {
+          return new Promise((resolve, reject) => {
+            failedQueue.push({ resolve, reject });
+          })
+            .then(() => {
+              return axios(originalRequest);
+            })
+            .catch((error) => {
+              Promise.reject(error);
+            });
+        } else {
+          // no referesh action in progress
+
+          originalRequest._retry = true;
+          isRefreshing = true;
+          try {
+            // get new access token
+            await axiosService.get('/auth/refresh');
+            // exec requests in queue
+            proccessQueue(null);
+            // retry request
+            return axios(originalRequest);
+          } catch (error: any) {
+            if (error.response.status === 401) {
+              // logout
+              globalValues.setUser!({});
+              AuthStorageService.resetAll();
+              globalValues.navigate!('/login');
+            } else {
+              proccessQueue(error);
+              return Promise.reject(error);
+            }
+          } finally {
+            isRefreshing = false;
           }
         }
       }
