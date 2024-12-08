@@ -1,12 +1,15 @@
 import clsx from 'clsx';
 import { useAuth } from '../../../hooks';
-import { AppDispatch, useAppSelector } from '../../../store';
+import {
+  AppDispatch,
+  loadMoreMessagesThunk,
+  useAppSelector,
+} from '../../../store';
 import { Message } from './message';
 import { useCallback, useEffect, useRef } from 'react';
 import { IMember, IUser } from '../../../types';
 import { debounce } from 'lodash';
 import { useDispatch } from 'react-redux';
-import { loadMoreMessagesThunk } from '../../../store/current-conversation.slice';
 import { Spin } from 'antd';
 
 const scrollThreshold = 300;

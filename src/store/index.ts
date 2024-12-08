@@ -15,3 +15,6 @@ export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
 export * from './hooks';
+export * from './conversations.slice';
+export * from './current-conversation.slice';
+export * from './received-request.slice';

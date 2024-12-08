@@ -6,8 +6,11 @@ import { SearchOutlined } from '@ant-design/icons';
 import { FaArrowLeft } from 'react-icons/fa6';
 import { useEffect, useState } from 'react';
 import { Conversation } from './conversation';
-import { AppDispatch, useAppSelector } from '../../../store';
-import { getConversationsThunk } from '../../../store/conversations.slice';
+import {
+  AppDispatch,
+  getConversationsThunk,
+  useAppSelector,
+} from '../../../store';
 import { useDispatch } from 'react-redux';
 import { ConversationSkeleton } from './conversation-skeleton';
 

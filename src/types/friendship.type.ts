@@ -13,6 +13,7 @@ export interface IFriendship {
   status: EFriendshipStatus;
   message?: string;
   acceptedAt?: number;
+  createdAt: number;
 }
 
 export interface IGetFriendshipsParams {
