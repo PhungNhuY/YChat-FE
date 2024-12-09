@@ -5,7 +5,7 @@ import { axiosErrorHandler, axiosService } from './axios.service';
 export async function getReceivedRequest(
   page = 1,
   limit = 20,
-): Promise<IMultiItemsResponse<IFriendship> | null> {
+): Promise<IMultiItemsResponse<IFriendship>> {
   try {
     const response = (
       await axiosService.get(
@@ -19,6 +19,6 @@ export async function getReceivedRequest(
     } else {
       console.log('error:  ', error);
     }
-    return null;
+    throw error;
   }
 }
