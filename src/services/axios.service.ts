@@ -53,7 +53,7 @@ axiosService.interceptors.response.use(
               return axios(originalRequest);
             })
             .catch((error) => {
-              Promise.reject(error);
+              return Promise.reject(error);
             });
         } else {
           // no referesh action in progress
