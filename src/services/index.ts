@@ -5,4 +5,4 @@ export * from './axios.service';
 export * from './auth.service';
 export * from './conversation.service';
 export * from './message.service';
-export * from './people.service';
+export * from './friendship.service';

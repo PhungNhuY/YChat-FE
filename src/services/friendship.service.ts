@@ -1,5 +1,10 @@
 import axios from 'axios';
-import { IApiResponse, IFriendship, IMultiItemsResponse } from '../types';
+import {
+  EFriendshipStatus,
+  IApiResponse,
+  IFriendship,
+  IMultiItemsResponse,
+} from '../types';
 import { axiosErrorHandler, axiosService } from './axios.service';
 
 export async function getReceivedRequest(
@@ -13,6 +18,21 @@ export async function getReceivedRequest(
       )
     ).data as IApiResponse<IFriendship>;
     return response.data as IMultiItemsResponse<IFriendship>;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      axiosErrorHandler(error);
+    } else {
+      console.log('error:  ', error);
+    }
+    throw error;
+  }
+}
+
+export async function acceptRequest(friendshipId: string) {
+  try {
+    await axiosService.patch(
+      `friendships/${friendshipId}?status=${EFriendshipStatus.ACCEPTED}`,
+    );
   } catch (error) {
     if (axios.isAxiosError(error)) {
       axiosErrorHandler(error);

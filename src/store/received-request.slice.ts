@@ -4,7 +4,7 @@ import {
   IGetFriendshipsParams,
   IMultiItemsResponse,
 } from '../types';
-import { getReceivedRequest } from '../services';
+import { acceptRequest, getReceivedRequest } from '../services';
 import { RootState } from '.';
 
 export interface IReceivedRequestState {
@@ -36,6 +36,13 @@ export const loadMoreReceivedRequestThunk = createAsyncThunk(
     const receivedRequest = (getState() as RootState).receivedRequest;
     if (receivedRequest.page + 1 > receivedRequest.numberOfPages) return [];
     return await getReceivedRequest(receivedRequest.page + 1);
+  },
+);
+
+export const acceptRequestThunk = createAsyncThunk(
+  'receivedRequest/accept',
+  async (friendshipId: string) => {
+    await acceptRequest(friendshipId);
   },
 );
 
@@ -71,6 +78,10 @@ export const receivedRequestSlice = createSlice({
       })
       .addCase(loadMoreReceivedRequestThunk.rejected, (state) => {
         state.loading = false;
+      })
+      .addCase(acceptRequestThunk.fulfilled, (state, action) => {
+        const requestId = action.meta.arg;
+        state.requests = state.requests.filter((r) => r._id !== requestId);
       });
   },
 });
