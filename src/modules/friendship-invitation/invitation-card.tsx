@@ -1,16 +1,26 @@
-import { Avatar, Card } from 'antd';
+import { Avatar, Card, Spin } from 'antd';
 import { IFriendship, IUser } from '../../types';
 import styles from './invitation-card.module.css';
 import clsx from 'clsx';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import { LoadingOutlined } from '@ant-design/icons';
 dayjs.extend(relativeTime);
 
-export function InvitationCard({ invitation }: { invitation: IFriendship }) {
+export function InvitationCard({
+  invitation,
+  accepting,
+}: {
+  invitation: IFriendship;
+  accepting: boolean;
+}) {
   return (
     <Card
       style={{ width: '100%', height: '100%' }}
-      actions={['Accept', 'Decline']}
+      actions={[
+        accepting ? <Spin indicator={<LoadingOutlined spin />} /> : 'Accept',
+        'Decline',
+      ]}
     >
       <Card.Meta
         avatar={

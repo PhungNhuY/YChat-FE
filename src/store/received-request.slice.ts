@@ -13,6 +13,8 @@ export interface IReceivedRequestState {
   total: number;
   numberOfPages: number;
   loading: boolean;
+  accepting: Array<string>;
+  declining: Array<string>;
 }
 
 const initialState: IReceivedRequestState = {
@@ -21,6 +23,8 @@ const initialState: IReceivedRequestState = {
   numberOfPages: 0,
   total: 0,
   loading: false,
+  accepting: [],
+  declining: [],
 };
 
 export const getReceivedRequestThunk = createAsyncThunk(
@@ -82,6 +86,15 @@ export const receivedRequestSlice = createSlice({
       .addCase(acceptRequestThunk.fulfilled, (state, action) => {
         const requestId = action.meta.arg;
         state.requests = state.requests.filter((r) => r._id !== requestId);
+        state.accepting = state.accepting.filter((r) => r !== requestId);
+      })
+      .addCase(acceptRequestThunk.pending, (state, action) => {
+        const requestId = action.meta.arg;
+        state.accepting.push(requestId);
+      })
+      .addCase(acceptRequestThunk.rejected, (state, action) => {
+        const requestId = action.meta.arg;
+        state.accepting = state.accepting.filter((r) => r !== requestId);
       });
   },
 });
