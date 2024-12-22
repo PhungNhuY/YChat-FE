@@ -1,16 +1,27 @@
-import { Button, Form, FormProps, Input } from 'antd';
+import { Button, Checkbox, Form, FormProps, Input, Spin } from 'antd';
 import { Ilogin } from '../../types';
 import { useLogin } from '../../hooks';
+import { useState } from 'react';
+import { LoadingOutlined } from '@ant-design/icons';
 
 export default function LoginForm() {
+  const [isLoading, setIsLoading] = useState(false);
   const login = useLogin();
 
   const onFinish: FormProps<Ilogin>['onFinish'] = async (values: Ilogin) => {
-    login(values);
+    setIsLoading(true);
+    await login(values);
+    setIsLoading(false);
   };
 
   return (
-    <Form name="Login" onFinish={onFinish} autoComplete="off" layout="vertical">
+    <Form
+      name="Login"
+      onFinish={onFinish}
+      autoComplete="off"
+      layout="vertical"
+      initialValues={{ remember: false }}
+    >
       <Form.Item<Ilogin>
         label="Email"
         name="email"
@@ -34,9 +45,21 @@ export default function LoginForm() {
       >
         <Input.Password />
       </Form.Item>
+      <Form.Item<Ilogin> name="remember" valuePropName="checked" label={null}>
+        <Checkbox>Remember me</Checkbox>
+      </Form.Item>
       <Form.Item>
-        <Button type="primary" htmlType="submit" className="w-100">
-          Login
+        <Button
+          type="primary"
+          htmlType="submit"
+          className="w-100"
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <Spin indicator={<LoadingOutlined spin />} size="small" />
+          ) : (
+            'Log in'
+          )}
         </Button>
       </Form.Item>
     </Form>
