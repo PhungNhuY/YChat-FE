@@ -28,7 +28,10 @@ export function PeopleInvitationPage() {
       <div className="row g-3">
         {receivedRequestState.requests.map((r) => (
           <div key={r._id} className="col-6">
-            <InvitationCard invitation={r} />
+            <InvitationCard
+              invitation={r}
+              accepting={receivedRequestState.accepting.includes(r._id)}
+            />
           </div>
         ))}
       </div>

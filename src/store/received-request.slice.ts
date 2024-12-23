@@ -3,9 +3,11 @@ import {
   IFriendship,
   IGetFriendshipsParams,
   IMultiItemsResponse,
+  IUser,
 } from '../types';
 import { acceptRequest, getReceivedRequest } from '../services';
 import { RootState } from '.';
+import { globalValues } from '../utils';
 
 export interface IReceivedRequestState {
   requests: Array<IFriendship>;
@@ -85,8 +87,12 @@ export const receivedRequestSlice = createSlice({
       })
       .addCase(acceptRequestThunk.fulfilled, (state, action) => {
         const requestId = action.meta.arg;
+        const request = state.requests.find((r) => r._id === requestId);
         state.requests = state.requests.filter((r) => r._id !== requestId);
         state.accepting = state.accepting.filter((r) => r !== requestId);
+        globalValues.messageApi?.success(
+          `You and ${(request?.sender as IUser).name} are now friends `,
+        );
       })
       .addCase(acceptRequestThunk.pending, (state, action) => {
         const requestId = action.meta.arg;

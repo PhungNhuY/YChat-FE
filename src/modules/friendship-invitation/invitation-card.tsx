@@ -5,6 +5,8 @@ import clsx from 'clsx';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { LoadingOutlined } from '@ant-design/icons';
+import { useDispatch } from 'react-redux';
+import { acceptRequestThunk, AppDispatch } from '../../store';
 dayjs.extend(relativeTime);
 
 export function InvitationCard({
@@ -14,11 +16,21 @@ export function InvitationCard({
   invitation: IFriendship;
   accepting: boolean;
 }) {
+  const dispatch = useDispatch<AppDispatch>();
+
+  const acceptRequest = () => {
+    dispatch(acceptRequestThunk(invitation._id));
+  };
+
   return (
     <Card
       style={{ width: '100%', height: '100%' }}
       actions={[
-        accepting ? <Spin indicator={<LoadingOutlined spin />} /> : 'Accept',
+        accepting ? (
+          <Spin indicator={<LoadingOutlined spin />} />
+        ) : (
+          <p onClick={acceptRequest}>Accept</p>
+        ),
         'Decline',
       ]}
     >
