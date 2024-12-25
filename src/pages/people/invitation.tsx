@@ -31,6 +31,7 @@ export function PeopleInvitationPage() {
             <InvitationCard
               invitation={r}
               accepting={receivedRequestState.accepting.includes(r._id)}
+              declining={receivedRequestState.declining.includes(r._id)}
             />
           </div>
         ))}

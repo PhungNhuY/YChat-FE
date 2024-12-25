@@ -6,20 +6,34 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { LoadingOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
-import { acceptRequestThunk, AppDispatch } from '../../store';
+import {
+  acceptRequestThunk,
+  AppDispatch,
+  declineRequestThunk,
+} from '../../store';
 dayjs.extend(relativeTime);
 
 export function InvitationCard({
   invitation,
   accepting,
+  declining,
 }: {
   invitation: IFriendship;
   accepting: boolean;
+  declining: boolean;
 }) {
   const dispatch = useDispatch<AppDispatch>();
 
   const acceptRequest = () => {
-    dispatch(acceptRequestThunk(invitation._id));
+    if (!accepting && !declining) {
+      dispatch(acceptRequestThunk(invitation._id));
+    }
+  };
+
+  const declineRequest = () => {
+    if (!accepting && !declining) {
+      dispatch(declineRequestThunk(invitation._id));
+    }
   };
 
   return (
@@ -31,7 +45,11 @@ export function InvitationCard({
         ) : (
           <p onClick={acceptRequest}>Accept</p>
         ),
-        'Decline',
+        declining ? (
+          <Spin indicator={<LoadingOutlined spin />} />
+        ) : (
+          <p onClick={declineRequest}>Decline</p>
+        ),
       ]}
     >
       <Card.Meta

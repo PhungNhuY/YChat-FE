@@ -5,7 +5,7 @@ import {
   IMultiItemsResponse,
   IUser,
 } from '../types';
-import { acceptRequest, getReceivedRequest } from '../services';
+import { acceptRequest, declineRequest, getReceivedRequest } from '../services';
 import { RootState } from '.';
 import { globalValues } from '../utils';
 
@@ -49,6 +49,13 @@ export const acceptRequestThunk = createAsyncThunk(
   'receivedRequest/accept',
   async (friendshipId: string) => {
     await acceptRequest(friendshipId);
+  },
+);
+
+export const declineRequestThunk = createAsyncThunk(
+  'receivedRequest/decline',
+  async (friendshipId: string) => {
+    await declineRequest(friendshipId);
   },
 );
 
@@ -101,6 +108,19 @@ export const receivedRequestSlice = createSlice({
       .addCase(acceptRequestThunk.rejected, (state, action) => {
         const requestId = action.meta.arg;
         state.accepting = state.accepting.filter((r) => r !== requestId);
+      })
+      .addCase(declineRequestThunk.fulfilled, (state, action) => {
+        const requestId = action.meta.arg;
+        state.requests = state.requests.filter((r) => r._id !== requestId);
+        state.declining = state.declining.filter((r) => r !== requestId);
+      })
+      .addCase(declineRequestThunk.pending, (state, action) => {
+        const requestId = action.meta.arg;
+        state.declining.push(requestId);
+      })
+      .addCase(declineRequestThunk.rejected, (state, action) => {
+        const requestId = action.meta.arg;
+        state.declining = state.declining.filter((r) => r !== requestId);
       });
   },
 });

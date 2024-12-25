@@ -42,3 +42,18 @@ export async function acceptRequest(friendshipId: string) {
     throw error;
   }
 }
+
+export async function declineRequest(friendshipId: string) {
+  try {
+    await axiosService.patch(
+      `friendships/${friendshipId}?status=${EFriendshipStatus.DECLINED}`,
+    );
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      axiosErrorHandler(error);
+    } else {
+      console.log('error:  ', error);
+    }
+    throw error;
+  }
+}
