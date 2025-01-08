@@ -1,6 +1,6 @@
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react-swc';
-import eslint from 'vite-plugin-eslint';
+import eslint from 'vite-plugin-eslint2';
 import tsConfigPaths from 'vite-tsconfig-paths';
 import path from 'path';
 
