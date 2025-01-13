@@ -43,12 +43,16 @@ export function InvitationCard({
         accepting ? (
           <Spin indicator={<LoadingOutlined spin />} />
         ) : (
-          <p onClick={acceptRequest}>Accept</p>
+          <p onClick={acceptRequest} className="m-0">
+            Accept
+          </p>
         ),
         declining ? (
           <Spin indicator={<LoadingOutlined spin />} />
         ) : (
-          <p onClick={declineRequest}>Decline</p>
+          <p onClick={declineRequest} className="m-0">
+            Decline
+          </p>
         ),
       ]}
     >

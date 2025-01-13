@@ -2,6 +2,7 @@ import axios, { AxiosError, AxiosRequestConfig, HttpStatusCode } from 'axios';
 import { throttle } from 'lodash';
 import { globalValues } from '../utils';
 import { AuthStorageService } from './auth-storage.service';
+import { tokenRefreshedEventEmitter } from './socket.service';
 
 export const axiosService = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
@@ -65,6 +66,12 @@ axiosService.interceptors.response.use(
             await axiosService.get('/auth/refresh');
             // exec requests in queue
             proccessQueue(null);
+
+            // Emit an event to reconnect socket
+            setTimeout(() => {
+              tokenRefreshedEventEmitter.emit('tokenRefreshed');
+            }, 100);
+
             // retry request
             return axios(originalRequest);
           } catch (error: any) {
