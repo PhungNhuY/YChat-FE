@@ -1,8 +1,9 @@
 import { createContext } from 'react';
 import { io } from 'socket.io-client';
 import { EventEmitter } from '../utils/event-emitter';
+import { WS_URL } from '../constants';
 
-export const socket = io(import.meta.env.VITE_WS_URL as string, {
+export const socket = io(WS_URL, {
   autoConnect: false,
   withCredentials: true,
   reconnection: true,

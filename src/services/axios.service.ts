@@ -3,9 +3,10 @@ import { throttle } from 'lodash';
 import { globalValues } from '../utils';
 import { AuthStorageService } from './auth-storage.service';
 import { tokenRefreshedEventEmitter } from './socket.service';
+import { API_BASE_URL } from '../constants';
 
 export const axiosService = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
