@@ -5,7 +5,7 @@ FROM node:20.11.1 AS build
 WORKDIR '/app'
 COPY . .
 RUN yarn --frozen-lockfile
-RUN echo -e "VITE_API_BASE_URL=\$VITE_API_BASE_URL\nVITE_WS_URL=\$VITE_WS_URL" > .env
+COPY docker/.env.template .env
 RUN yarn build
 
 ####################
