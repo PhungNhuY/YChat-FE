@@ -3,6 +3,7 @@ import { Ilogin } from '../../types';
 import { useLogin } from '../../hooks';
 import { useState } from 'react';
 import { LoadingOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 
 export default function LoginForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -45,10 +46,18 @@ export default function LoginForm() {
       >
         <Input.Password />
       </Form.Item>
-      <Form.Item<Ilogin> name="remember" valuePropName="checked" label={null}>
-        <Checkbox>Remember me</Checkbox>
-      </Form.Item>
-      <Form.Item>
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <Form.Item<Ilogin>
+          name="remember"
+          valuePropName="checked"
+          label={null}
+          className="m-0"
+        >
+          <Checkbox>Remember me</Checkbox>
+        </Form.Item>
+        <Link to={'/forgot-password'}>Forgot password</Link>
+      </div>
+      <Form.Item className="mb-2">
         <Button
           type="primary"
           htmlType="submit"
