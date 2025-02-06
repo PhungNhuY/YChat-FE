@@ -40,7 +40,8 @@ axiosService.interceptors.response.use(
   async (error) => {
     if (
       error.config.url.indexOf('/auth/login') !== 0 &&
-      error.config.url.indexOf('/auth/refresh') !== 0
+      error.config.url.indexOf('/auth/refresh') !== 0 &&
+      error.config.url.indexOf('/auth/register') !== 0
     ) {
       // try to get new access token and retry failed api
       const originalRequest: AxiosRequestConfig & { _retry?: boolean } =

@@ -15,6 +15,7 @@ import {
   PeopleInvitationPage,
 } from '../pages';
 import { PeoplePageLayout } from '../modules/people';
+import { RegisterPage } from '../pages/register-page';
 
 // Define public routes accessible by all users
 const routesForPublic: Array<RouteObject> = [];
@@ -62,6 +63,10 @@ const routesForUnauthenticatedOnly: Array<RouteObject> = [
       {
         path: 'login',
         element: <LoginPage />,
+      },
+      {
+        path: 'register',
+        element: <RegisterPage />,
       },
     ],
   },

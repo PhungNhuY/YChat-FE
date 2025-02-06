@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Ilogin, IUser } from '../types';
+import { Ilogin, IRegister, IUser } from '../types';
 import { axiosErrorHandler, axiosService } from './axios.service';
 
 export async function login(loginData: Ilogin): Promise<IUser | null> {
@@ -19,4 +19,16 @@ export async function login(loginData: Ilogin): Promise<IUser | null> {
 
 export async function logout() {
   await axiosService.get('auth/logout');
+}
+
+export async function register(data: IRegister) {
+  try {
+    await axiosService.post('/auth/register', data);
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      axiosErrorHandler(error);
+    } else {
+      console.log('error:  ', error);
+    }
+  }
 }

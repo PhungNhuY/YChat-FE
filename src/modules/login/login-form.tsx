@@ -71,6 +71,16 @@ export default function LoginForm() {
           )}
         </Button>
       </Form.Item>
+
+      <div
+        className="d-flex justify-content-center w-100"
+        style={{ fontSize: 14 }}
+      >
+        <span>{"Don't have an account yet?"}</span>
+        <Link className="ms-1" to={'/register'}>
+          Register
+        </Link>
+      </div>
     </Form>
   );
 }

@@ -1,10 +1,10 @@
-import LoginForm from '../modules/login/login-form';
+import RegisterForm from '../modules/register/register-form';
 
-export function LoginPage() {
+export function RegisterPage() {
   return (
     <div className="d-flex justify-content-center align-items-center vh-100">
       <div className="" style={{ width: '100%', maxWidth: 300 }}>
-        <LoginForm />
+        <RegisterForm />
       </div>
     </div>
   );

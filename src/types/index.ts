@@ -4,3 +4,4 @@ export * from './conversation.type';
 export * from './message.type';
 export * from './response.type';
 export * from './friendship.type';
+export * from './register.type';
