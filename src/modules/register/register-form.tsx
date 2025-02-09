@@ -1,20 +1,41 @@
-import { Button, DatePicker, Form, FormProps, Input, Select, Spin } from 'antd';
-import { IRegister } from '../../types';
+import {
+  Button,
+  DatePicker,
+  Form,
+  FormProps,
+  Input,
+  Modal,
+  Select,
+  Spin,
+} from 'antd';
+import { EUserGender, IRegister } from '../../types';
 import { useState } from 'react';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { register } from '../../services';
+import { globalValues } from '../../utils';
 
 export default function RegisterForm() {
   const [isLoading, setIsLoading] = useState(false);
 
+  const showSuccessNotification = () => {
+    Modal.success({
+      title: 'Registration Successful',
+      afterClose: () => globalValues.navigate?.('/login'),
+      centered: true,
+      content: 'Please check your email to activate your account',
+    });
+  };
+
   const onFinish: FormProps<IRegister>['onFinish'] = async (
     values: IRegister,
   ) => {
+    delete (values as any).confirmPassword;
     setIsLoading(true);
     await register(values);
     setIsLoading(false);
+    showSuccessNotification();
   };
 
   return (
@@ -89,9 +110,9 @@ export default function RegisterForm() {
 
       <Form.Item<IRegister> label="Gender" name={'gender'}>
         <Select>
-          <Select.Option value="male">Male</Select.Option>
-          <Select.Option value="female">Female</Select.Option>
-          <Select.Option value="other">Other</Select.Option>
+          <Select.Option value={EUserGender.MALE}>Male</Select.Option>
+          <Select.Option value={EUserGender.FEMALE}>Female</Select.Option>
+          <Select.Option value={EUserGender.OTHER}>Other</Select.Option>
         </Select>
       </Form.Item>
 

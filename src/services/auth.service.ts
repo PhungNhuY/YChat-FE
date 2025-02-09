@@ -32,3 +32,25 @@ export async function register(data: IRegister) {
     }
   }
 }
+
+export async function activateAccount(
+  userId: string,
+  tokenId: string,
+  tokenValue: string,
+  onSuccess: () => void,
+) {
+  try {
+    await axiosService.post(`/auth/activate`, {
+      uid: userId,
+      tid: tokenId,
+      tv: tokenValue,
+    });
+    onSuccess();
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      axiosErrorHandler(error);
+    } else {
+      console.log('error:  ', error);
+    }
+  }
+}

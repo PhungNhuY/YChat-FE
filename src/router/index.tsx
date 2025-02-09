@@ -6,6 +6,7 @@ import {
 import { AuthenticatedLayout } from '../layouts/authenticated-layout/authenticated-layout';
 import { UnauthenticatedLayout } from '../layouts/unauthenticated-layout';
 import {
+  ActivatePage,
   ErrorPage,
   HomePage,
   LoginPage,
@@ -67,6 +68,15 @@ const routesForUnauthenticatedOnly: Array<RouteObject> = [
       {
         path: 'register',
         element: <RegisterPage />,
+      },
+      {
+        path: 'auth',
+        children: [
+          {
+            path: 'activate',
+            element: <ActivatePage />,
+          },
+        ],
       },
     ],
   },
