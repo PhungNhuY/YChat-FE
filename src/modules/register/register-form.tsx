@@ -46,6 +46,9 @@ export default function RegisterForm() {
       layout="vertical"
       initialValues={{ remember: false }}
     >
+      <div className="w-100">
+        <h4 className="text-center mb-4">Register</h4>
+      </div>
       <Form.Item<IRegister>
         label="Email"
         name="email"

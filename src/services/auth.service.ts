@@ -54,3 +54,16 @@ export async function activateAccount(
     }
   }
 }
+
+export async function forgotPassword(email: string, onSuccess: () => void) {
+  try {
+    await axiosService.post(`/auth/forgot-password`, { email });
+    onSuccess();
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      axiosErrorHandler(error);
+    } else {
+      console.log('error:  ', error);
+    }
+  }
+}

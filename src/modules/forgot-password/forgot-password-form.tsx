@@ -1,32 +1,47 @@
-import { Button, Checkbox, Form, FormProps, Input, Spin } from 'antd';
-import { Ilogin } from '../../types';
-import { useLogin } from '../../hooks';
+import { Button, Form, FormProps, Input, Modal, Spin } from 'antd';
+import { IForgotPassword } from '../../types';
 import { useState } from 'react';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import { forgotPassword } from '../../services';
+import { globalValues } from '../../utils';
 
-export default function LoginForm() {
+export default function ForgotPasswordForm() {
   const [isLoading, setIsLoading] = useState(false);
-  const login = useLogin();
 
-  const onFinish: FormProps<Ilogin>['onFinish'] = async (values: Ilogin) => {
+  const showSuccessNotification = () => {
+    Modal.success({
+      title: 'We sent you an email',
+      afterClose: () => globalValues.navigate?.('/login'),
+      centered: true,
+      content:
+        'Please check your email and follow the instructions to reset your password',
+    });
+  };
+
+  const onFinish: FormProps<IForgotPassword>['onFinish'] = async (
+    values: IForgotPassword,
+  ) => {
     setIsLoading(true);
-    await login(values);
+    await forgotPassword(values.email, showSuccessNotification);
     setIsLoading(false);
   };
 
   return (
     <Form
-      name="Login"
+      name="ForgotPassword"
       onFinish={onFinish}
       autoComplete="off"
       layout="vertical"
       initialValues={{ remember: false }}
     >
       <div className="w-100">
-        <h4 className="text-center">Login to YChat</h4>
+        <h4 className="text-center mb-4">Forgot password ?</h4>
+        <p className="text-center" style={{ fontSize: 12 }}>
+          Don&apos;t worry, we will send you reset instructions
+        </p>
       </div>
-      <Form.Item<Ilogin>
+      <Form.Item<IForgotPassword>
         label="Email"
         name="email"
         rules={[
@@ -42,24 +57,7 @@ export default function LoginForm() {
       >
         <Input />
       </Form.Item>
-      <Form.Item<Ilogin>
-        label="Password"
-        name="password"
-        rules={[{ required: true, message: 'Please input your password!' }]}
-      >
-        <Input.Password />
-      </Form.Item>
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <Form.Item<Ilogin>
-          name="remember"
-          valuePropName="checked"
-          label={null}
-          className="m-0"
-        >
-          <Checkbox>Remember me</Checkbox>
-        </Form.Item>
-        <Link to={'/auth/forgot-password'}>Forgot password</Link>
-      </div>
+
       <Form.Item className="mb-2">
         <Button
           type="primary"
@@ -70,7 +68,7 @@ export default function LoginForm() {
           {isLoading ? (
             <Spin indicator={<LoadingOutlined spin />} size="small" />
           ) : (
-            'Log in'
+            'Find'
           )}
         </Button>
       </Form.Item>
@@ -79,9 +77,9 @@ export default function LoginForm() {
         className="d-flex justify-content-center w-100"
         style={{ fontSize: 14 }}
       >
-        <span>{"Don't have an account yet?"}</span>
-        <Link className="ms-1" to={'/register'}>
-          Register
+        <span>{'Remember your password?'}</span>
+        <Link className="ms-1" to={'/login'}>
+          Login
         </Link>
       </div>
     </Form>

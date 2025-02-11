@@ -65,7 +65,7 @@ axiosService.interceptors.response.use(
           isRefreshing = true;
           try {
             // get new access token
-            await axiosService.get('/auth/refresh');
+            await axiosService.post('/auth/refresh');
             // exec requests in queue
             proccessQueue(null);
 

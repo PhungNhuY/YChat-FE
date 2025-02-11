@@ -8,6 +8,7 @@ import { UnauthenticatedLayout } from '../layouts/unauthenticated-layout';
 import {
   ActivatePage,
   ErrorPage,
+  ForgotPasswordPage,
   HomePage,
   LoginPage,
   NotFoundPage,
@@ -75,6 +76,10 @@ const routesForUnauthenticatedOnly: Array<RouteObject> = [
           {
             path: 'activate',
             element: <ActivatePage />,
+          },
+          {
+            path: 'forgot-password',
+            element: <ForgotPasswordPage />,
           },
         ],
       },
