@@ -24,7 +24,8 @@ export default function RegisterForm() {
       title: 'Registration Successful',
       afterClose: () => globalValues.navigate?.('/login'),
       centered: true,
-      content: 'Please check your email to activate your account',
+      content:
+        'We are going to send you an email. Please check your email and follow the instructions to activate your account',
     });
   };
 
@@ -47,7 +48,7 @@ export default function RegisterForm() {
       initialValues={{ remember: false }}
     >
       <div className="w-100">
-        <h4 className="text-center mb-4">Register</h4>
+        <h4 className="text-center fw-bold mb-4">Register</h4>
       </div>
       <Form.Item<IRegister>
         label="Email"

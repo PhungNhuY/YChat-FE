@@ -11,11 +11,11 @@ export default function ForgotPasswordForm() {
 
   const showSuccessNotification = () => {
     Modal.success({
-      title: 'We sent you an email',
+      title: 'We found your account',
       afterClose: () => globalValues.navigate?.('/login'),
       centered: true,
       content:
-        'Please check your email and follow the instructions to reset your password',
+        'We are going to send you an email. Follow the instructions to reset your password',
     });
   };
 
@@ -36,7 +36,7 @@ export default function ForgotPasswordForm() {
       initialValues={{ remember: false }}
     >
       <div className="w-100">
-        <h4 className="text-center mb-4">Forgot password ?</h4>
+        <h4 className="text-center fw-bold mb-4">Forgot password ?</h4>
         <p className="text-center" style={{ fontSize: 12 }}>
           Don&apos;t worry, we will send you reset instructions
         </p>

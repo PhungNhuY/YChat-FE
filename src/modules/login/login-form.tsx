@@ -24,7 +24,7 @@ export default function LoginForm() {
       initialValues={{ remember: false }}
     >
       <div className="w-100">
-        <h4 className="text-center">Login to YChat</h4>
+        <h4 className="text-center fw-bold mb-4">Login to YChat</h4>
       </div>
       <Form.Item<Ilogin>
         label="Email"
