@@ -18,6 +18,7 @@ import {
 } from '../pages';
 import { PeoplePageLayout } from '../modules/people';
 import { RegisterPage } from '../pages/register-page';
+import { ResetPasswordPage } from '../pages/auth/reset-password';
 
 // Define public routes accessible by all users
 const routesForPublic: Array<RouteObject> = [];
@@ -80,6 +81,10 @@ const routesForUnauthenticatedOnly: Array<RouteObject> = [
           {
             path: 'forgot-password',
             element: <ForgotPasswordPage />,
+          },
+          {
+            path: 'reset-password',
+            element: <ResetPasswordPage />,
           },
         ],
       },

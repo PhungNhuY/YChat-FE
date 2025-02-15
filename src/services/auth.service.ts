@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Ilogin, IRegister, IUser } from '../types';
+import { ETokenType, Ilogin, IRegister, IUser } from '../types';
 import { axiosErrorHandler, axiosService } from './axios.service';
 
 export async function login(loginData: Ilogin): Promise<IUser | null> {
@@ -65,5 +65,27 @@ export async function forgotPassword(email: string, onSuccess: () => void) {
     } else {
       console.log('error:  ', error);
     }
+  }
+}
+
+export async function validateToken(
+  userId: string,
+  tokenId: string,
+  tokenValue: string,
+  onFailure: () => void,
+) {
+  try {
+    const response = await axiosService.get(
+      `/auth/user-from-token?uid=${userId}&tid=${tokenId}&tv=${tokenValue}&tokenType=${ETokenType.FORGOT_PASSWORD}`,
+    );
+    const email = response.data.data.email;
+    return email;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      axiosErrorHandler(error);
+    } else {
+      console.log('error:  ', error);
+    }
+    onFailure();
   }
 }
