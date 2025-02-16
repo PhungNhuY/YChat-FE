@@ -1,4 +1,4 @@
-.conversationList {
+.conversationContainer {
   height: 100%;
 }
 
@@ -49,10 +49,4 @@
 
 .searchInput {
   border-radius: 99px;
-}
-
-.list {
-  overflow-y: auto;
-  margin-top: 8px;
-  padding: 0px 6px;
 }

@@ -1,24 +1,15 @@
 import clsx from 'clsx';
-import styles from './conversation-list.module.css';
+import styles from './conversation-container.module.css';
 import { IoCreateOutline } from 'react-icons/io5';
 import { Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { FaArrowLeft } from 'react-icons/fa6';
 import { useEffect, useState } from 'react';
-import { Conversation } from './conversation';
-import {
-  AppDispatch,
-  getConversationsThunk,
-  useAppSelector,
-} from '../../../store';
+import { AppDispatch, getConversationsThunk } from '../../../store';
 import { useDispatch } from 'react-redux';
-import { ConversationSkeleton } from './conversation-skeleton';
+import { ConversationList } from './conversation-list';
 
-export function ConversationList() {
-  const conversations = useAppSelector(
-    (state) => state.conversation.conversations,
-  );
-  const loading = useAppSelector((state) => state.conversation.loading);
+export function ConversationContainer() {
   const dispatch = useDispatch<AppDispatch>();
 
   const [isSearching, setIsSearching] = useState(false);
@@ -32,13 +23,18 @@ export function ConversationList() {
   }, []);
 
   return (
-    <div className={clsx(styles.conversationList, 'd-flex flex-column')}>
+    <div
+      className={clsx(styles.conversationContainer, 'd-flex flex-column')}
+      id="conversation-container"
+    >
+      {/* heading */}
       <div
         className={clsx(
           'd-flex justify-content-between align-items-center',
           'flex-fixed-size',
           styles.heading,
         )}
+        id="conversation-container-heading"
       >
         <span className={clsx(styles.headingTitle)}>Conversations</span>
         <button className={clsx(styles.newConversationButton)}>
@@ -48,12 +44,15 @@ export function ConversationList() {
           />
         </button>
       </div>
+
+      {/* search */}
       <div
         className={clsx(
           styles.search,
           'd-flex justify-content-between align-items-center gap-1',
           'flex-fixed-size',
         )}
+        id="conversation-container-search"
       >
         {isSearching && (
           <button
@@ -75,17 +74,9 @@ export function ConversationList() {
           onClick={() => setIsSearching(true)}
         />
       </div>
-      <div className={clsx(styles.list, 'flex-expanding-size')}>
-        {loading ? (
-          <>
-            {[...Array(5)].map((_, i) => (
-              <ConversationSkeleton key={i} />
-            ))}
-          </>
-        ) : (
-          conversations.map((data, i) => <Conversation key={i} data={data} />)
-        )}
-      </div>
+
+      {/* list */}
+      <ConversationList />
     </div>
   );
 }

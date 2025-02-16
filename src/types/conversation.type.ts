@@ -27,8 +27,3 @@ export interface IConversation {
   avatar?: string;
   lastMessage?: IMessage;
 }
-
-export interface IGetConversationsParams {
-  page?: number;
-  limit?: number;
-}
