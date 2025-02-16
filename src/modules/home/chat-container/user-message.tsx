@@ -3,7 +3,7 @@ import { IMessage, IUser } from '../../../types';
 import { Avatar, Tooltip } from 'antd';
 import styles from './message.module.css';
 
-export function Message({
+export function UserMessage({
   message,
   currentUser,
   author,

@@ -5,12 +5,13 @@ import {
   loadMoreMessagesThunk,
   useAppSelector,
 } from '../../../store';
-import { Message } from './message';
+import { UserMessage } from './user-message';
 import { useCallback, useEffect, useRef } from 'react';
-import { IMember, IUser } from '../../../types';
+import { EMessageType, IMember, IUser } from '../../../types';
 import { debounce } from 'lodash';
 import { useDispatch } from 'react-redux';
 import { Spin } from 'antd';
+import { SystemMessage } from './system-message';
 
 const scrollThreshold = 300;
 const debounceTime = 200;
@@ -114,14 +115,18 @@ export function Messages() {
         ref={messagesRef}
       >
         {messages &&
-          messages.map((m) => (
-            <Message
-              key={m._id}
-              message={m}
-              currentUser={user}
-              author={memberMap.current.get(m.user as string) as IUser}
-            />
-          ))}
+          messages.map((m) =>
+            m.type === EMessageType.NOTIFICATION ? (
+              <SystemMessage key={m._id} message={m} currentUser={user} />
+            ) : (
+              <UserMessage
+                key={m._id}
+                message={m}
+                currentUser={user}
+                author={memberMap.current.get(m.user as string) as IUser}
+              />
+            ),
+          )}
       </div>
       {loadingMessages && <Spin className="py-2" />}
     </div>

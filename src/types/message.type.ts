@@ -3,6 +3,7 @@ import { IUser } from './user.type';
 export enum EMessageType {
   TEXT = 1,
   FIlE = 2,
+  NOTIFICATION = 3,
 }
 
 export interface IMessage {
