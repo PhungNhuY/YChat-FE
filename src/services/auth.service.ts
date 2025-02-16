@@ -89,3 +89,27 @@ export async function validateToken(
     onFailure();
   }
 }
+
+export async function resetPassword(
+  userId: string,
+  tokenId: string,
+  tokenValue: string,
+  password: string,
+  onSuccess: () => void,
+) {
+  try {
+    await axiosService.post(`/auth/reset-password`, {
+      uid: userId,
+      tid: tokenId,
+      tv: tokenValue,
+      password,
+    });
+    onSuccess();
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      axiosErrorHandler(error);
+    } else {
+      console.log('error:  ', error);
+    }
+  }
+}

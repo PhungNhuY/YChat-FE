@@ -4,13 +4,13 @@ import { useEffect, useState } from 'react';
 import { LoadingOutlined } from '@ant-design/icons';
 import { useSearchParams } from 'react-router-dom';
 import { globalValues } from '../../utils';
-import { validateToken } from '../../services';
+import { resetPassword, validateToken } from '../../services';
 
 export default function ResetPasswordForm() {
   const [searchParams] = useSearchParams();
-  const userId = searchParams.get('uid');
-  const tokenId = searchParams.get('tid');
-  const tokenValue = searchParams.get('tv');
+  const userId = searchParams.get('uid') ?? '';
+  const tokenId = searchParams.get('tid') ?? '';
+  const tokenValue = searchParams.get('tv') ?? '';
 
   const [email, setEmail] = useState('');
   const [isValidating, setIsValidating] = useState(false);
@@ -37,13 +37,12 @@ export default function ResetPasswordForm() {
     globalValues.navigate?.('/login');
   };
 
-  const showSuccessNotification = () => {
+  const onResetSuccess = () => {
     Modal.success({
-      title: 'We found your account',
+      title: 'Password reset successful',
       afterClose: () => globalValues.navigate?.('/login'),
       centered: true,
-      content:
-        'We are going to send you an email. Follow the instructions to reset your password',
+      content: 'Now you can login with your new password.',
     });
   };
 
@@ -51,7 +50,13 @@ export default function ResetPasswordForm() {
     values: IResetPassword,
   ) => {
     setIsLoading(true);
-    // await forgotPassword(values.email, showSuccessNotification);
+    await resetPassword(
+      userId,
+      tokenId,
+      tokenValue,
+      values.newPassword,
+      onResetSuccess,
+    );
     setIsLoading(false);
   };
 
