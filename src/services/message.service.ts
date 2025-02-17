@@ -8,7 +8,8 @@ import {
 import { axiosErrorHandler, axiosService } from './axios.service';
 import { FETCH_MESSAGES_LIMIT } from '../constants';
 
-const cache = new Map<string, Array<IMessage>>();
+const messagesCache = new Map<string, Array<IMessage>>();
+export const allMessagesLoaded = new Map<string, boolean>();
 
 export async function getMessages(
   conversationId: string,
@@ -16,7 +17,7 @@ export async function getMessages(
 ): Promise<Array<IMessage> | null> {
   if (!before) {
     // get cached messages
-    const cachedMessages = cache.get(conversationId);
+    const cachedMessages = messagesCache.get(conversationId);
     if (cachedMessages) {
       return cachedMessages;
     }
@@ -32,8 +33,8 @@ export async function getMessages(
     const { items: messages } = response.data as IMultiItemsResponse<IMessage>;
 
     // cache messages
-    if (cache.has(conversationId)) {
-      const cachedMessages = cache.get(conversationId)!;
+    if (messagesCache.has(conversationId)) {
+      const cachedMessages = messagesCache.get(conversationId)!;
       messages.forEach((m) => {
         // add the message if it doesn't exist in the list
         if (!cachedMessages.some((m2) => m2._id === m._id)) {
@@ -41,7 +42,7 @@ export async function getMessages(
         }
       });
     } else {
-      cache.set(conversationId, messages);
+      messagesCache.set(conversationId, messages);
     }
 
     return messages;
@@ -76,10 +77,14 @@ export async function sendMessage(
 }
 
 export async function addNewMessage(conversationId: string, message: IMessage) {
-  const messages = cache.get(conversationId);
+  const messages = messagesCache.get(conversationId);
   if (messages) {
     messages.unshift(message);
   } else {
-    cache.set(conversationId, [message]);
+    messagesCache.set(conversationId, [message]);
   }
+}
+
+export async function markConversationLoadedAllMessage(conversationId: string) {
+  allMessagesLoaded.set(conversationId, true);
 }

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IConversation, IGetMessagesParams, IMessage, IUser } from '../types';
-import { getMessages } from '../services';
+import { allMessagesLoaded, getMessages } from '../services';
 import { RootState } from '.';
 
 export interface ICurrentConversationState {
@@ -49,6 +49,8 @@ export const currentConversationSlice = createSlice({
       state.conversation = action.payload;
       state.messages = initialState.messages;
       state.loadingMessages = initialState.loadingMessages;
+      state.allMessagesLoaded =
+        allMessagesLoaded.get(action.payload._id) ?? false;
     },
     addNewMessageToCurrentConversation: (
       state,
@@ -85,6 +87,7 @@ export const currentConversationSlice = createSlice({
       .addCase(loadMoreMessagesThunk.fulfilled, (state, action) => {
         if (action.payload?.length === 0) {
           state.allMessagesLoaded = true;
+          allMessagesLoaded.set(state.conversation!._id, true);
         }
         action.payload?.forEach((m) => {
           if (state.messages === null) state.messages = [];
