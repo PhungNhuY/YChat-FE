@@ -9,7 +9,7 @@ import { useLogout } from '../../hooks';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
-export function Menu2({ user }: { user: IUser }) {
+export function BottomMenu({ user }: { user: IUser }) {
   const logout = useLogout();
 
   const menu: MenuItem[] = [

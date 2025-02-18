@@ -18,7 +18,7 @@ const menu: MenuItem[] = [
   },
 ];
 
-export function Menu1() {
+export function TopMenu() {
   // caculate selected tabs from current path
   const location = useLocation();
   const [selectedTabs, setSelectedTabs] = useState<string>('');

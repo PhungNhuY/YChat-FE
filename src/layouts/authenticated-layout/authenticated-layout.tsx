@@ -7,8 +7,8 @@ import styles from './authenticated-layout.module.css';
 import clsx from 'clsx';
 import { LocalStorageService } from '../../services';
 import { SocketContext } from '../../services/socket.service';
-import { Menu2 } from './menu2';
-import { Menu1 } from './menu1';
+import { BottomMenu } from './bottom-menu';
+import { TopMenu } from './top-menu';
 
 const { Content, Sider } = Layout;
 
@@ -65,9 +65,9 @@ export function AuthenticatedLayout() {
               >
                 YChat
               </div>
-              <Menu1 />
+              <TopMenu />
             </div>
-            <Menu2 user={user} />
+            <BottomMenu user={user} />
           </div>
         </Sider>
         <Layout className="vh-100">

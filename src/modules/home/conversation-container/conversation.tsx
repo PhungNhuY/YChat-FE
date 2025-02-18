@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import styles from './conversation.module.css';
 import { Avatar } from 'antd';
-import { IConversation, IUser } from '../../../types';
+import { EMessageType, IConversation, IUser } from '../../../types';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useAuth } from '../../../hooks';
@@ -58,7 +58,12 @@ export function Conversation({ data }: { data: IConversation }) {
         <div className="">
           {data.lastMessage && (
             <>
-              <span>{data.lastMessage.content}</span>
+              {data.lastMessage.type === EMessageType.NOTIFICATION && (
+                <span></span>
+              )}
+              {data.lastMessage.type === EMessageType.TEXT && (
+                <span>{data.lastMessage.content}</span>
+              )}
               <span> &#8901; </span>
               <span>{dayjs(data.lastMessage.createdAt).fromNow(true)}</span>
             </>
