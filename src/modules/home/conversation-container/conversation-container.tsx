@@ -15,11 +15,7 @@ export function ConversationContainer() {
   const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
-    dispatch(
-      getConversationsThunk({
-        page: 1,
-      }),
-    );
+    dispatch(getConversationsThunk());
   }, []);
 
   return (

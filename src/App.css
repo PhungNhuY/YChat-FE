@@ -66,3 +66,7 @@ html,
 .profile-menu .profile-menu-item > .ant-menu-submenu-title:hover {
   background-color: #f5f5f5 !important;
 }
+
+.custom-ant-collapse.ant-collapse .ant-collapse-content {
+  background-color: white;
+}
