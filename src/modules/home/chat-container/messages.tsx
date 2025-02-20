@@ -7,7 +7,12 @@ import {
 } from '../../../store';
 import { UserMessage } from './user-message';
 import { useCallback, useEffect, useRef } from 'react';
-import { EMessageType, IMember, IUser } from '../../../types';
+import {
+  EConversationType,
+  EMessageType,
+  IMember,
+  IUser,
+} from '../../../types';
 import { debounce } from 'lodash';
 import { useDispatch } from 'react-redux';
 import { Spin } from 'antd';
@@ -124,6 +129,9 @@ export function Messages() {
                 message={m}
                 currentUser={user}
                 author={memberMap.current.get(m.user as string) as IUser}
+                isOne2One={
+                  currentConversation.type === EConversationType.ONE_TO_ONE
+                }
               />
             ),
           )}

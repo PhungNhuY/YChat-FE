@@ -1,16 +1,18 @@
 import clsx from 'clsx';
 import { IMessage, IUser } from '../../../types';
 import { Avatar, Tooltip } from 'antd';
-import styles from './message.module.css';
+import styles from './user-message.module.css';
 
 export function UserMessage({
   message,
   currentUser,
   author,
+  isOne2One,
 }: {
   message: IMessage;
   currentUser: IUser;
   author: IUser;
+  isOne2One: boolean;
 }) {
   const mine = currentUser._id === author?._id;
   return (
@@ -31,11 +33,9 @@ export function UserMessage({
       )}
 
       {/* content */}
-      <div className="">
-        {!mine && (
-          <span className="ms-3" style={{ fontSize: 12, color: '#65676B' }}>
-            {author?.name}
-          </span>
+      <div className="d-flex flex-column align-items-start">
+        {!mine && !isOne2One && (
+          <span className={clsx(styles.author)}>{author?.name}</span>
         )}
         <Tooltip
           title={'10:23'}
