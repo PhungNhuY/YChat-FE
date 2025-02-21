@@ -2,6 +2,7 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import conversationReducer from './conversations.slice';
 import currentConversationReducer from './current-conversation.slice';
 import receivedRequestReducer from './received-request.slice';
+import friendsReducer from './friends.slice';
 
 export const RESET_STATE = 'RESET_STATE';
 
@@ -9,6 +10,7 @@ const rootReducer = combineReducers({
   conversation: conversationReducer,
   currentConversation: currentConversationReducer,
   receivedRequest: receivedRequestReducer,
+  friends: friendsReducer,
 });
 
 const rootReducerWithReset = (state: any, action: any) => {
@@ -33,3 +35,4 @@ export * from './hooks';
 export * from './conversations.slice';
 export * from './current-conversation.slice';
 export * from './received-request.slice';
+export * from './friends.slice';

@@ -57,3 +57,22 @@ export async function declineRequest(friendshipId: string) {
     throw error;
   }
 }
+
+export async function getFriends(
+  page = 1,
+  limit = 20,
+): Promise<IMultiItemsResponse<IFriendship>> {
+  try {
+    const response = (
+      await axiosService.get(`/friendships?page=${page}&limit=${limit}`)
+    ).data as IApiResponse<IFriendship>;
+    return response.data as IMultiItemsResponse<IFriendship>;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      axiosErrorHandler(error);
+    } else {
+      console.log('error:  ', error);
+    }
+    throw error;
+  }
+}
