@@ -70,3 +70,7 @@ html,
 .custom-ant-collapse.ant-collapse .ant-collapse-content {
   background-color: white;
 }
+
+.friend-card.ant-card .ant-card-body {
+  padding: 8px 12px;
+}

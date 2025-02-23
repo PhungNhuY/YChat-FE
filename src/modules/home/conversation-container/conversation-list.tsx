@@ -20,9 +20,6 @@ export function ConversationList() {
     (state) => state.conversation.conversations,
   );
   const loading = useAppSelector((state) => state.conversation.loading);
-  const firstLoadExecuted = useAppSelector(
-    (state) => state.conversation.firstLoadExecuted,
-  );
   const total = useAppSelector((state) => state.conversation.total);
 
   // infinite scroll

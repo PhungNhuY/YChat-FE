@@ -8,8 +8,6 @@ const pageSize = 20;
 export interface IConversationState {
   conversations: Array<IConversation>;
   loading: boolean;
-  // allConversationsLoaded: boolean;
-  firstLoadExecuted: boolean;
   page: number;
   total: number;
 }
@@ -17,8 +15,6 @@ export interface IConversationState {
 const initialState: IConversationState = {
   conversations: [],
   loading: false,
-  // allConversationsLoaded: false,
-  firstLoadExecuted: false,
   page: 1,
   total: 0,
 };
@@ -86,7 +82,6 @@ export const conversationSlice = createSlice({
         });
         state.total = total;
         state.loading = false;
-        state.firstLoadExecuted = true;
       })
       .addCase(getConversationsThunk.pending, (state) => {
         state.loading = true;
