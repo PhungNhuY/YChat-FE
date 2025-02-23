@@ -8,6 +8,19 @@
   object-fit: cover;
 }
 
+.defaultAvatar {
+  display: flex !important;
+  justify-content: center;
+  align-items: end;
+  background-color: #bfbfbf;
+}
+
+.defaultAvatarIcon {
+  font-size: 180px;
+  color: #ffffff;
+  margin-bottom: -23px;
+}
+
 .name {
   font-weight: 600;
   font-size: 16px;

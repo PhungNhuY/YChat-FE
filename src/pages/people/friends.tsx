@@ -1,5 +1,10 @@
 import { useEffect } from 'react';
-import { AppDispatch, getFriendsThunk, useAppSelector } from '../../store';
+import {
+  AppDispatch,
+  getFriendsThunk,
+  loadMoreFriendsThunk,
+  useAppSelector,
+} from '../../store';
 import { useDispatch } from 'react-redux';
 import { Button, Spin } from 'antd';
 import { CaretDownOutlined } from '@ant-design/icons';
@@ -37,7 +42,7 @@ export function PeopleFriendsPage() {
           <Button
             className="w-100 mt-3"
             icon={<CaretDownOutlined />}
-            onClick={() => {}}
+            onClick={() => dispatch(loadMoreFriendsThunk())}
           >
             {' '}
             More

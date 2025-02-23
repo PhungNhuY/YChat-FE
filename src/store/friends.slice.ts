@@ -5,6 +5,7 @@ import {
   IMultiItemsResponse,
 } from '../types';
 import { getFriends } from '../services';
+import { RootState } from '.';
 
 export interface IFriendsState {
   friends: Array<IFriendship>;
@@ -29,6 +30,15 @@ export const getFriendsThunk = createAsyncThunk(
   },
 );
 
+export const loadMoreFriendsThunk = createAsyncThunk(
+  'receivedRequest/loadMore',
+  async (_, { getState }) => {
+    const friendsState = (getState() as RootState).friends;
+    if (friendsState.page + 1 > friendsState.numberOfPages) return [];
+    return await getFriends(friendsState.page + 1);
+  },
+);
+
 export const friendsSlice = createSlice({
   name: 'friends',
   initialState,
@@ -46,6 +56,20 @@ export const friendsSlice = createSlice({
         state.loading = true;
       })
       .addCase(getFriendsThunk.rejected, (state) => {
+        state.loading = false;
+      })
+      .addCase(loadMoreFriendsThunk.fulfilled, (state, action) => {
+        const res = action.payload as IMultiItemsResponse<IFriendship>;
+        state.friends = [...state.friends, ...res.items];
+        state.total = res.total;
+        state.numberOfPages = Math.ceil(res.total / 20);
+        state.loading = false;
+        state.page = state.page + 1;
+      })
+      .addCase(loadMoreFriendsThunk.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(loadMoreFriendsThunk.rejected, (state) => {
         state.loading = false;
       });
   },
