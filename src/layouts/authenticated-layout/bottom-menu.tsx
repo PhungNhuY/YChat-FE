@@ -6,6 +6,7 @@ import { PiWarningFill } from 'react-icons/pi';
 import { GrTextAlignFull } from 'react-icons/gr';
 import { TbLogout } from 'react-icons/tb';
 import { useLogout } from '../../hooks';
+import { FaUser } from 'react-icons/fa';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -19,6 +20,12 @@ export function BottomMenu({ user }: { user: IUser }) {
       icon: <Avatar size={32}>{user.name[0]}</Avatar>,
       className: 'profile-menu-item',
       children: [
+        {
+          label: 'Profile',
+          key: 'profile',
+          icon: <FaUser />,
+          onClick: () => {},
+        },
         {
           label: 'Option',
           key: 'option',

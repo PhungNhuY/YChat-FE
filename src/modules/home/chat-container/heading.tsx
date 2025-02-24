@@ -44,13 +44,13 @@ export function ChatContainerHeading({
             <CgMoreO
               size={20}
               className={clsx(styles.functionalButton)}
-              color="#A100F2"
+              color="#007BF5"
             />
           ) : (
             <CgMoreAlt
               size={20}
               className={clsx(styles.functionalButton)}
-              color="#A100F2"
+              color="#007BF5"
             />
           )}
         </button>

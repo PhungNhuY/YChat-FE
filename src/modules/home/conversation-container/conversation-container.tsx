@@ -33,12 +33,12 @@ export function ConversationContainer() {
         id="conversation-container-heading"
       >
         <span className={clsx(styles.headingTitle)}>Conversations</span>
-        <button className={clsx(styles.newConversationButton)}>
+        {/* <button className={clsx(styles.newConversationButton)}>
           <IoCreateOutline
             size={18}
             className={clsx(styles.newConversationButtonIcon)}
           />
-        </button>
+        </button> */}
       </div>
 
       {/* search */}
