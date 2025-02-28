@@ -1,0 +1,23 @@
+.text {
+  font-weight: 400;
+  font-family: 'Sigmar', serif;
+  font-style: normal;
+
+  background: linear-gradient(45deg, #ff0000, #1a53ff, #ea01ff, #fcfc00);
+  background-clip: text;
+  background-size: 400% 400%;
+  color: transparent;
+  animation: gradient 120s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0%;
+  }
+  50% {
+    background-position: 100%;
+  }
+  100% {
+    background-position: 0%;
+  }
+}

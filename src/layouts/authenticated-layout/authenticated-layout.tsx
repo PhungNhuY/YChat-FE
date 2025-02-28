@@ -3,12 +3,11 @@ import { useAuth, useEventListener, useSetup } from '../../hooks';
 import { Layout, theme } from 'antd';
 import { useContext, useEffect, useState } from 'react';
 import { IUser } from '../../types';
-import styles from './authenticated-layout.module.css';
-import clsx from 'clsx';
 import { LocalStorageService } from '../../services';
 import { SocketContext } from '../../services/socket.service';
 import { BottomMenu } from './bottom-menu';
 import { TopMenu } from './top-menu';
+import { Logo } from '../../components/logo/logo';
 
 const { Content, Sider } = Layout;
 
@@ -57,13 +56,8 @@ export function AuthenticatedLayout() {
         >
           <div className="d-flex flex-column justify-content-between h-100">
             <div>
-              <div
-                className={clsx(
-                  styles.logo,
-                  'd-flex justify-content-center align-items-center',
-                )}
-              >
-                YChat
+              <div className="d-flex justify-content-center align-items-center mt-2">
+                <Logo size={18} />
               </div>
               <TopMenu />
             </div>
