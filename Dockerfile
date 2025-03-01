@@ -1,7 +1,7 @@
 ####################
 # stage1: build
 ####################
-FROM node:20.11.1 AS build
+FROM --platform=$TARGETPLATFORM node:20.11.1 AS build
 WORKDIR '/app'
 COPY . .
 RUN yarn --frozen-lockfile
@@ -11,7 +11,7 @@ RUN yarn build
 ####################
 # stage2: production 
 ####################
-FROM nginx:1.27.0-alpine AS prod
+FROM --platform=$TARGETPLATFORM nginx:1.27.0-alpine AS prod
 
 COPY docker/entrypoint.sh /
 RUN chmod +x /entrypoint.sh

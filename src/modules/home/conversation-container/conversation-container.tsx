@@ -1,6 +1,5 @@
 import clsx from 'clsx';
 import styles from './conversation-container.module.css';
-import { IoCreateOutline } from 'react-icons/io5';
 import { Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { FaArrowLeft } from 'react-icons/fa6';
