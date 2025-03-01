@@ -1,11 +1,10 @@
+import { AuthenFormLayout } from '../layouts/authen-form-layout';
 import LoginForm from '../modules/login/login-form';
 
 export function LoginPage() {
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100">
-      <div className="" style={{ width: '100%', maxWidth: 300 }}>
-        <LoginForm />
-      </div>
-    </div>
+    <AuthenFormLayout>
+      <LoginForm />
+    </AuthenFormLayout>
   );
 }
