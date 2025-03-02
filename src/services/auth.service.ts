@@ -21,9 +21,10 @@ export async function logout() {
   await axiosService.post('auth/logout');
 }
 
-export async function register(data: IRegister) {
+export async function register(data: IRegister, onSuccess: () => void) {
   try {
     await axiosService.post('/auth/register', data);
+    onSuccess();
   } catch (error) {
     if (axios.isAxiosError(error)) {
       axiosErrorHandler(error);

@@ -34,9 +34,8 @@ export default function RegisterForm() {
   ) => {
     delete (values as any).confirmPassword;
     setIsLoading(true);
-    await register(values);
+    await register(values, showSuccessNotification);
     setIsLoading(false);
-    showSuccessNotification();
   };
 
   return (

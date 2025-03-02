@@ -126,6 +126,9 @@ export const axiosErrorHandler = (error: AxiosError) => {
       } else {
         errorMessage = message;
       }
+      if (!errorMessage) {
+        errorMessage = 'Something went wrong! Please try again later!';
+      }
       globalValues.messageApi!.error(errorMessage);
     }
   } else if (request) {
@@ -148,5 +151,5 @@ const showServiceUnavailableError = throttle(() => {
 }, THROTTLE_TIME);
 
 const showConnectionProblemError = throttle(() => {
-  globalValues.messageApi!.error('You are offline!');
+  globalValues.messageApi!.error('Connection problem! Please try again later!');
 }, THROTTLE_TIME);
