@@ -1,0 +1,9 @@
+services:
+  ychat-fe:
+    container_name: ychat-fe
+    restart: unless-stopped
+    build: .
+    ports:
+      - $VITE_PORT:80
+    env_file:
+      - ./.env
