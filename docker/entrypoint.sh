@@ -11,7 +11,7 @@ do
     cp $file $file.tmpl.js
   fi
 
-  envsubst '$VITE_API_BASE_URL,$VITE_WS_URL' < $file.tmpl.js > $file
+  envsubst '$VITE_API_BASE_URL,$VITE_WS_URL,$VITE_WS_PREFIX' < $file.tmpl.js > $file
 
   rm -f $file.tmpl.js
 done
