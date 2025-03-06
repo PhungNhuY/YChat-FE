@@ -7,11 +7,14 @@ import { GrTextAlignFull } from 'react-icons/gr';
 import { TbLogout } from 'react-icons/tb';
 import { useLogout } from '../../hooks';
 import { FaUser } from 'react-icons/fa';
+import { ProfileModal } from '../../modules/profile/profile-modal';
+import { useState } from 'react';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
 export function BottomMenu({ user }: { user: IUser }) {
   const logout = useLogout();
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
   const menu: MenuItem[] = [
     {
@@ -24,7 +27,9 @@ export function BottomMenu({ user }: { user: IUser }) {
           label: 'Profile',
           key: 'profile',
           icon: <FaUser />,
-          onClick: () => {},
+          onClick: () => {
+            setIsProfileModalOpen(true);
+          },
         },
         {
           label: 'Option',
@@ -70,13 +75,19 @@ export function BottomMenu({ user }: { user: IUser }) {
   ];
 
   return (
-    <Menu
-      theme="light"
-      items={menu}
-      selectedKeys={[]}
-      style={{ border: 0 }}
-      expandIcon={null}
-      className="profile-menu"
-    />
+    <>
+      <Menu
+        theme="light"
+        items={menu}
+        selectedKeys={[]}
+        style={{ border: 0 }}
+        expandIcon={null}
+        className="profile-menu"
+      />
+      <ProfileModal
+        isOpen={isProfileModalOpen}
+        onClose={() => setIsProfileModalOpen(false)}
+      />
+    </>
   );
 }
