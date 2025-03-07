@@ -6,7 +6,15 @@ export async function login(loginData: Ilogin): Promise<IUser | null> {
   try {
     const response = (await axiosService.post('/auth/login', loginData)).data;
     const user = response.data as IUser;
-    return user;
+    return {
+      _id: user._id,
+      email: user.email,
+      name: user.name,
+      avatar: user.avatar,
+      DOB: user.DOB,
+      gender: user.gender,
+      status: user.status,
+    };
   } catch (error) {
     if (axios.isAxiosError(error)) {
       axiosErrorHandler(error);
