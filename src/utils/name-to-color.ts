@@ -1,0 +1,29 @@
+export const COLORS = [
+  '#f44336',
+  '#e91e63',
+  '#9c27b0',
+  '#673ab7',
+  '#3f51b5',
+  '#2196f3',
+  '#03a9f4',
+  '#00bcd4',
+  '#009688',
+  '#4caf50',
+  '#8bc34a',
+  '#cddc39',
+  '#ffc107',
+  '#ff9800',
+  '#ff5722',
+  '#795548',
+  '#9e9e9e',
+  '#607d8b',
+];
+
+export const nameToColor = (name: string) => {
+  // hash name
+  let index = 0;
+  for (let i = 0; i < name.length; i++) {
+    index = (index + name.charCodeAt(i) * 10) % COLORS.length;
+  }
+  return COLORS[index];
+};

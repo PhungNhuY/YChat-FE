@@ -1,7 +1,6 @@
-import { Avatar, Menu, MenuProps } from 'antd';
+import { Menu, MenuProps } from 'antd';
 import { IUser } from '../../types';
 import { MdOutlineHelp, MdSettings } from 'react-icons/md';
-import { globalValues } from '../../utils';
 import { PiWarningFill } from 'react-icons/pi';
 import { GrTextAlignFull } from 'react-icons/gr';
 import { TbLogout } from 'react-icons/tb';
@@ -9,6 +8,8 @@ import { useLogout } from '../../hooks';
 import { FaUser } from 'react-icons/fa';
 import { ProfileModal } from '../../modules/profile/profile-modal';
 import { useState } from 'react';
+import { Avatar } from '../../components';
+import { globalValues } from '../../utils';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -20,7 +21,7 @@ export function BottomMenu({ user }: { user: IUser }) {
     {
       label: user.name,
       key: 'user',
-      icon: <Avatar size={32}>{user.name[0]}</Avatar>,
+      icon: <Avatar username={user.name} size={32} avatar={user.avatar} />,
       className: 'profile-menu-item',
       children: [
         {

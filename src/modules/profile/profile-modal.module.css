@@ -1,0 +1,42 @@
+.updateButton {
+  font-size: 16px;
+}
+
+.background {
+  width: calc(100% + 48px) !important;
+  margin-left: -24px;
+  aspect-ratio: 400/170;
+  object-fit: cover;
+}
+
+.nameAndAvatar {
+  height: 60px;
+}
+
+.nameAndAvatar > div {
+  top: -25px;
+}
+
+.infoTitle {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 6;
+  display: block;
+}
+
+.avatar {
+  border: 3px solid #fff;
+}
+
+.divider {
+  width: calc(100% + 48px) !important;
+  margin: 0px 0px 8px -24px;
+  height: 6px;
+  background-color: #ebecf0;
+}
+
+.field {
+  width: 80px;
+  color: #5a6981;
+  height: 34px;
+}
