@@ -78,3 +78,7 @@ html,
 .friend-card.ant-card .ant-card-body {
   padding: 8px 12px;
 }
+
+.profile-upload-avatar .ant-upload-list {
+  display: none;
+}

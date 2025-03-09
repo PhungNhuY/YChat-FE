@@ -1,4 +1,4 @@
-import { Button, Divider, Modal, Image } from 'antd';
+import { Button, Divider, Modal, Image, Upload } from 'antd';
 import { LuPencilLine } from 'react-icons/lu';
 import styles from './profile-modal.module.css';
 import clsx from 'clsx';
@@ -6,6 +6,7 @@ import { useAuth } from '../../hooks';
 import { EUserGender, IUser } from '../../types';
 import { Avatar } from '../../components';
 import dayjs from 'dayjs';
+import { UploadAvatarButton } from './upload-avatar-button';
 
 export function ProfileModal({
   isOpen,
@@ -42,13 +43,14 @@ export function ProfileModal({
       />
       <div className={clsx('position-relative', styles.nameAndAvatar)}>
         <div className="position-absolute d-flex">
-          <div className="flex-fixed-size">
+          <div className="flex-fixed-size position-relative">
             <Avatar
               size={80}
               username={user.name}
               avatar={user.avatar}
               className={styles.avatar}
             />
+            <UploadAvatarButton />
           </div>
           <div className="flex-expanding-size px-3" style={{ paddingTop: 30 }}>
             <span style={{ fontSize: 18 }}>{user.name}</span>
