@@ -7,3 +7,4 @@ export * from './conversation.service';
 export * from './message.service';
 export * from './friendship.service';
 export * from '../utils/event-emitter';
+export * from './assets.service';

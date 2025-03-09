@@ -59,6 +59,8 @@ html,
 /* profile button in authenticated layout */
 .profile-menu .profile-menu-item > .ant-menu-submenu-title {
   padding: 0px 10px !important;
+  display: flex;
+  align-items: center;
 }
 .profile-menu.ant-menu-inline-collapsed
   .profile-menu-item

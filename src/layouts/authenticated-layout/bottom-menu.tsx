@@ -21,7 +21,14 @@ export function BottomMenu({ user }: { user: IUser }) {
     {
       label: user.name,
       key: 'user',
-      icon: <Avatar username={user.name} size={32} avatar={user.avatar} />,
+      icon: (
+        <Avatar
+          username={user.name}
+          size={34}
+          avatar={user.avatar}
+          className="flex-fixed-size"
+        />
+      ),
       className: 'profile-menu-item',
       children: [
         {
