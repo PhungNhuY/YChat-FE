@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { AppDispatch, getConversationsThunk } from '../../../store';
 import { useDispatch } from 'react-redux';
 import { ConversationList } from './conversation-list';
+import { SearchResult } from './search-result/search-result';
 
 export function ConversationContainer() {
   const dispatch = useDispatch<AppDispatch>();
@@ -70,8 +71,7 @@ export function ConversationContainer() {
         />
       </div>
 
-      {/* list */}
-      <ConversationList />
+      {isSearching ? <SearchResult /> : <ConversationList />}
     </div>
   );
 }

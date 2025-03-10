@@ -1,4 +1,4 @@
-import { Button, Divider, Modal, Image, Upload } from 'antd';
+import { Button, Divider, Modal, Image } from 'antd';
 import { LuPencilLine } from 'react-icons/lu';
 import styles from './profile-modal.module.css';
 import clsx from 'clsx';
