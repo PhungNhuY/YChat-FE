@@ -13,6 +13,7 @@ export function ConversationContainer() {
   const dispatch = useDispatch<AppDispatch>();
 
   const [isSearching, setIsSearching] = useState(false);
+  const [searchText, setSearchText] = useState('');
 
   useEffect(() => {
     dispatch(getConversationsThunk());
@@ -68,10 +69,12 @@ export function ConversationContainer() {
           placeholder="Find on YChat"
           prefix={<SearchOutlined />}
           onClick={() => setIsSearching(true)}
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
         />
       </div>
 
-      {isSearching ? <SearchResult /> : <ConversationList />}
+      {isSearching ? <SearchResult text={searchText} /> : <ConversationList />}
     </div>
   );
 }

@@ -76,3 +76,18 @@ export async function getFriends(
     throw error;
   }
 }
+
+export async function sendRequest(userId: string, onSuccess: () => void) {
+  try {
+    await axiosService.post(`/friendships`, {
+      receiver: userId,
+    });
+    onSuccess();
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      axiosErrorHandler(error);
+    } else {
+      console.log('error:  ', error);
+    }
+  }
+}

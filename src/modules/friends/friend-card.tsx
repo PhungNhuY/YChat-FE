@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import styles from './friend-card.module.css';
 import { useAuth } from '../../hooks';
 import { BiSolidUser } from 'react-icons/bi';
+import { ASSETS_API_BASE_URL } from '../../constants';
 
 export function FriendCard({ friendship }: { friendship: IFriendship }) {
   const { user }: { user: IUser } = useAuth();
@@ -16,7 +17,10 @@ export function FriendCard({ friendship }: { friendship: IFriendship }) {
       className={clsx(styles.card, 'friend-card')}
       cover={
         friend.avatar ? (
-          <img src={friend.avatar} className={clsx(styles.avatar)} />
+          <img
+            src={`${ASSETS_API_BASE_URL}/${friend.avatar}`}
+            className={clsx(styles.avatar)}
+          />
         ) : (
           <div className={clsx(styles.avatar, styles.defaultAvatar)}>
             <BiSolidUser className={clsx(styles.defaultAvatarIcon)} />

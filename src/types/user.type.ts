@@ -1,3 +1,5 @@
+import { EFriendshipStatus, IFriendship } from './friendship.type';
+
 export enum EUserGender {
   MALE = 1,
   FEMALE = 2,
@@ -17,4 +19,8 @@ export interface IUser {
   DOB?: Date;
   gender?: EUserGender;
   status: EUserStatus;
+}
+
+export interface IUserWithFriendshipStatus extends IUser {
+  friendship?: IFriendship;
 }
