@@ -1,4 +1,4 @@
-import { EFriendshipStatus, IFriendship } from './friendship.type';
+import { IFriendship } from './friendship.type';
 
 export enum EUserGender {
   MALE = 1,

@@ -4,12 +4,12 @@ import { IUserWithFriendshipStatus } from '../../../../types';
 import { User } from './user';
 
 export function UsersTab({ text }: { text: string }) {
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState<Array<IUserWithFriendshipStatus>>([]);
 
   useEffect(() => {
     const handler = setTimeout(async () => {
-      setIsLoading(true);
+      // setIsLoading(true);
       setUsers([]);
 
       if (text !== '') {
@@ -17,7 +17,7 @@ export function UsersTab({ text }: { text: string }) {
         setUsers(res.items);
       }
 
-      setIsLoading(false);
+      // setIsLoading(false);
     }, 500);
 
     return () => {
